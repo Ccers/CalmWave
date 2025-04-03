@@ -1,0 +1,1585 @@
+2025-03-31 00:05:25,210 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_bucextgq
+2025-03-31 00:05:25,212 - INFO: 服务启动初始化完成
+2025-03-31 00:22:31,705 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music__u68vyr0
+2025-03-31 00:22:31,710 - INFO: 服务启动初始化完成
+2025-03-31 00:38:26,514 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_3dk0r_c1
+2025-03-31 00:38:26,521 - INFO: 服务启动初始化完成
+2025-03-31 00:40:01,761 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_mj4tytee
+2025-03-31 00:40:01,769 - INFO: 服务启动初始化完成
+2025-03-31 01:16:11,613 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_hhiaphx_
+2025-03-31 01:16:11,619 - INFO: 服务启动初始化完成
+2025-03-31 16:03:01,979 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_4z0xk30e
+2025-03-31 16:03:01,988 - INFO: 服务启动初始化完成
+2025-03-31 16:04:35,402 - ERROR: Exception on /register [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 351, in register_user
+    result = database.add_user(data["username"], data["account"], data["phone"], data["password"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 43, in add_user
+    user_exists = cursor.fetchone()[0]  # 获取计数结果
+TypeError: 'NoneType' object is not subscriptable
+2025-03-31 16:12:28,404 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_mq7om7t9
+2025-03-31 16:12:28,407 - INFO: 服务启动初始化完成
+2025-03-31 17:08:01,266 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 360, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 98, in record_device_connection
+    cursor.execute(sql,(account, device_id))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`calmwave_databases`.`device_connection_history`, CONSTRAINT `device_connection_history_ibfk_1` FOREIGN KEY (`account`) REFERENCES `user` (`account`))')
+2025-03-31 17:11:34,701 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 360, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 98, in record_device_connection
+    elif status=="已断开":
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`calmwave_databases`.`device_connection_history`, CONSTRAINT `device_connection_history_ibfk_1` FOREIGN KEY (`account`) REFERENCES `user` (`account`))')
+2025-03-31 17:12:29,912 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 360, in connect_device
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 98, in record_device_connection
+    elif status=="已断开":
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`calmwave_databases`.`device_connection_history`, CONSTRAINT `device_connection_history_ibfk_1` FOREIGN KEY (`account`) REFERENCES `user` (`account`))')
+2025-03-31 17:58:39,767 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music__e_ta6ug
+2025-03-31 17:58:39,770 - INFO: 服务启动初始化完成
+2025-03-31 18:02:05,736 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 361, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 97, in record_device_connection
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`calmwave_databases`.`device_connection_history`, CONSTRAINT `device_connection_history_ibfk_1` FOREIGN KEY (`account`) REFERENCES `user` (`account`))')
+2025-03-31 18:03:29,474 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_zcg3i1pt
+2025-03-31 18:03:29,477 - INFO: 服务启动初始化完成
+2025-03-31 18:13:42,866 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_e034aa8a
+2025-03-31 18:13:42,869 - INFO: 服务启动初始化完成
+2025-03-31 18:13:46,265 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 361, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 101, in record_device_connection
+    cursor.execute(sql,(account, device_id))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`calmwave_databases`.`device_connection_history`, CONSTRAINT `device_connection_history_ibfk_1` FOREIGN KEY (`account`) REFERENCES `user` (`account`))')
+2025-03-31 18:20:38,100 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 361, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 101, in record_device_connection
+    cursor.execute(sql,(account, device_id))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`calmwave_databases`.`device_connection_history`, CONSTRAINT `device_connection_history_ibfk_1` FOREIGN KEY (`account`) REFERENCES `user` (`account`))')
+2025-03-31 18:20:47,667 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_a3jjxvc8
+2025-03-31 18:20:47,669 - INFO: 服务启动初始化完成
+2025-03-31 18:20:51,043 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 361, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 101, in record_device_connection
+    cursor.execute(sql,(account, device_id))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`calmwave_databases`.`device_connection_history`, CONSTRAINT `device_connection_history_ibfk_1` FOREIGN KEY (`account`) REFERENCES `user` (`account`))')
+2025-03-31 20:42:51,275 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_7sejlm2d
+2025-03-31 20:42:51,279 - INFO: 服务启动初始化完成
+2025-03-31 20:43:00,932 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 361, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 106, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+2025-03-31 20:52:44,919 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 361, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 106, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+2025-04-01 09:18:45,409 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_rl9ybipg
+2025-04-01 09:18:45,418 - INFO: 服务启动初始化完成
+2025-04-01 09:19:15,435 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 367, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 106, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 371, in connect_device
+    except pymysql.IntegrityError as e:
+NameError: name 'pymysql' is not defined
+2025-04-01 09:27:00,550 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 367, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 106, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 371, in connect_device
+    except pymysql.IntegrityError as e:
+NameError: name 'pymysql' is not defined
+2025-04-01 09:29:57,648 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_w4pcc46_
+2025-04-01 09:29:57,656 - INFO: 服务启动初始化完成
+2025-04-01 09:30:17,350 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 367, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 107, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 371, in connect_device
+    except pymysql.IntegrityError as e:
+NameError: name 'pymysql' is not defined
+2025-04-01 09:30:49,002 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 367, in connect_device
+    #print(date+" "+account)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 107, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 371, in connect_device
+NameError: name 'pymysql' is not defined
+2025-04-01 09:31:03,770 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 367, in connect_device
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 107, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 371, in connect_device
+    result = database.get_pressure_data(account, date)
+NameError: name 'pymysql' is not defined
+2025-04-01 09:42:17,418 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 367, in connect_device
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 107, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 371, in connect_device
+    result = database.get_pressure_data(account, date)
+NameError: name 'pymysql' is not defined
+2025-04-01 09:49:59,726 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_46ank2_1
+2025-04-01 09:49:59,731 - INFO: 服务启动初始化完成
+2025-04-01 09:50:14,895 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 339, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 107, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+2025-04-01 09:51:54,400 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 339, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 107, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+2025-04-01 09:52:08,412 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_yxm8bcdy
+2025-04-01 09:52:08,421 - INFO: 服务启动初始化完成
+2025-04-01 09:52:16,839 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 339, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 107, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+2025-04-01 09:53:25,476 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 339, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 107, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+2025-04-01 09:54:01,150 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 339, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 107, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: 用户账号 xm1213 不存在
+2025-04-01 09:54:25,894 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_vggbwgfx
+2025-04-01 09:54:25,900 - INFO: 服务启动初始化完成
+2025-04-01 09:54:34,443 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 339, in connect_device
+    result = database.record_device_connection(data["account"], data["device_id"], data["status"],data["device_name"],data["mac_address"])
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 107, in record_device_connection
+    raise UserNotFoundError(account)
+database.UserNotFoundError: User xm1213 is entry
+2025-04-01 10:15:45,792 - ERROR: Exception on /device/connect [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 339, in connect_device
+    result = database.record_device_connection(
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 107, in record_device_connection
+    sql="""INSERT INTO device_connection_history (account, device_id, connection_time, connection_status)
+database.UserNotFoundError: User xm1213 is entry
+2025-04-01 10:15:49,637 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ha0cy3yg
+2025-04-01 10:15:49,640 - INFO: 服务启动初始化完成
+2025-04-01 10:23:56,672 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_a8xyx4qm
+2025-04-01 10:23:56,676 - INFO: 服务启动初始化完成
+2025-04-01 14:25:22,836 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_u4jv96r5
+2025-04-01 14:25:22,848 - INFO: 服务启动初始化完成
+2025-04-01 15:01:22,059 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_kwlg55ka
+2025-04-01 15:01:22,062 - INFO: 服务启动初始化完成
+2025-04-01 15:02:09,248 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 67, in login_with_account_password
+    if check_password_hash(user['password'], password):
+TypeError: tuple indices must be integers or slices, not str
+2025-04-01 15:02:42,214 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 67, in login_with_account_password
+    if check_password_hash(user['password'], password):
+TypeError: tuple indices must be integers or slices, not str
+2025-04-01 15:04:33,248 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 67, in login_with_account_password
+    if check_password_hash(user['password'], password):
+TypeError: tuple indices must be integers or slices, not str
+2025-04-01 15:06:05,710 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 67, in login_with_account_password
+    if check_password_hash(user['password'], password):
+TypeError: tuple indices must be integers or slices, not str
+2025-04-01 15:07:08,806 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 67, in login_with_account_password
+    if check_password_hash(user['password'], password):
+TypeError: tuple indices must be integers or slices, not str
+2025-04-01 15:07:25,083 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 67, in login_with_account_password
+    if check_password_hash(user['password'], password):
+TypeError: tuple indices must be integers or slices, not str
+2025-04-01 15:07:35,925 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 67, in login_with_account_password
+    if check_password_hash(user['password'], password):
+TypeError: tuple indices must be integers or slices, not str
+2025-04-01 15:08:37,267 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 67, in login_with_account_password
+    if check_password_hash(user['password'], password):
+TypeError: tuple indices must be integers or slices, not str
+2025-04-01 15:09:10,584 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_16cxobh4
+2025-04-01 15:09:10,592 - INFO: 服务启动初始化完成
+2025-04-01 15:13:55,878 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_im90g627
+2025-04-01 15:13:55,878 - INFO: 服务启动初始化完成
+2025-04-01 15:14:27,244 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_znkikjbf
+2025-04-01 15:14:27,248 - INFO: 服务启动初始化完成
+2025-04-01 16:08:08,266 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ylu7_ckt
+2025-04-01 16:08:08,269 - INFO: 服务启动初始化完成
+2025-04-01 16:10:10,018 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_0bwp92it
+2025-04-01 16:10:10,022 - INFO: 服务启动初始化完成
+2025-04-01 16:10:17,597 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 70, in login_with_account_password
+    if check_password(user['password'], password):
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 145, in check_password
+    return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password.encode('utf-8'))
+ValueError: Invalid salt
+2025-04-01 16:13:08,964 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 70, in login_with_account_password
+    if check_password(user['password'], password):
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 145, in check_password
+    return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password.encode('utf-8'))
+ValueError: Invalid salt
+2025-04-01 16:18:01,420 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_kv5la3mt
+2025-04-01 16:18:01,422 - INFO: 服务启动初始化完成
+2025-04-01 16:18:04,067 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 70, in login_with_account_password
+    if check_password(user['password'], password):
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 145, in check_password
+    return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password.encode('utf-8'))
+ValueError: Invalid salt
+2025-04-01 16:18:20,078 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 70, in login_with_account_password
+    if check_password(user['password'], password):
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 145, in check_password
+    return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password.encode('utf-8'))
+ValueError: Invalid salt
+2025-04-01 16:19:00,853 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_r02ujihr
+2025-04-01 16:19:00,855 - INFO: 服务启动初始化完成
+2025-04-01 16:19:02,718 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 71, in login_with_account_password
+    if check_password(user['password'], password):
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 146, in check_password
+    return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password.encode('utf-8'))
+ValueError: Invalid salt
+2025-04-01 16:21:47,923 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_2ie112h5
+2025-04-01 16:21:47,926 - INFO: 服务启动初始化完成
+2025-04-01 16:21:50,185 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 72, in login_with_account_password
+    if check_password(user['password'], password):
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 147, in check_password
+    return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password.encode('utf-8'))
+ValueError: Invalid salt
+2025-04-01 16:23:18,701 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_vxzasf2l
+2025-04-01 16:23:18,704 - INFO: 服务启动初始化完成
+2025-04-01 16:23:25,191 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 73, in login_with_account_password
+    if check_password(user['password'], password):
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 148, in check_password
+    return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password.encode('utf-8'))
+ValueError: Invalid salt
+2025-04-01 16:27:51,415 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_cxyavhx4
+2025-04-01 16:27:51,417 - INFO: 服务启动初始化完成
+2025-04-01 16:28:13,723 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 74, in login_with_account_password
+    return {"status": "success", "message": "登录成功", "user_id": user['id'], "username": user['username']}
+KeyError: 'id'
+2025-04-01 16:28:22,483 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 74, in login_with_account_password
+    return {"status": "success", "message": "登录成功", "user_id": user['id'], "username": user['username']}
+KeyError: 'id'
+2025-04-01 16:29:05,134 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 74, in login_with_account_password
+    return {"status": "success", "message": "登录成功", "user_id": user['id'], "username": user['username']}
+KeyError: 'id'
+2025-04-01 16:29:14,653 - ERROR: Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 325, in login
+    result = database.login_with_account_password(account, password)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 74, in login_with_account_password
+    return {"status": "success", "message": "登录成功", "user_id": user['user_id'], "username": user['username']}
+KeyError: 'id'
+2025-04-01 16:29:22,170 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_cfif1ejo
+2025-04-01 16:29:22,174 - INFO: 服务启动初始化完成
+2025-04-01 16:52:49,273 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 105, in register_wechat_user
+    cursor.execute(sql_check, (wechat_openid,))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1054, "Unknown column 'id' in 'field list'")
+2025-04-01 16:53:42,661 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 105, in register_wechat_user
+    cursor.execute(sql_check, (wechat_openid,))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1054, "Unknown column 'id' in 'field list'")
+2025-04-01 16:53:50,705 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_v58qnr0a
+2025-04-01 16:53:50,709 - INFO: 服务启动初始化完成
+2025-04-01 16:53:51,602 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 105, in register_wechat_user
+    cursor.execute(sql_check, (wechat_openid,))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1054, "Unknown column 'id' in 'field list'")
+2025-04-01 16:56:35,716 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_316jnujh
+2025-04-01 16:56:35,720 - INFO: 服务启动初始化完成
+2025-04-01 16:56:41,921 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 105, in register_wechat_user
+    cursor.execute(sql_check, (wechat_openid,))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1054, "Unknown column 'id' in 'field list'")
+2025-04-01 16:59:25,199 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_b2rynznd
+2025-04-01 16:59:25,201 - INFO: 服务启动初始化完成
+2025-04-01 16:59:30,005 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 105, in register_wechat_user
+    cursor.execute(sql_check, (wechat_openid,))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1054, "Unknown column 'id' in 'field list'")
+2025-04-01 17:02:33,703 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_dex6mi6p
+2025-04-01 17:02:33,706 - INFO: 服务启动初始化完成
+2025-04-01 17:02:35,106 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 112, in register_wechat_user
+    cursor.execute(sql_check, (wechat_openid,))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1054, "Unknown column 'id' in 'field list'")
+2025-04-01 17:03:37,789 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_j9oon_t6
+2025-04-01 17:03:37,792 - INFO: 服务启动初始化完成
+2025-04-01 17:03:40,229 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 112, in register_wechat_user
+    cursor.execute(sql_check, (wechat_openid,))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1054, "Unknown column 'id' in 'field list'")
+2025-04-01 17:05:33,479 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ljvp4ket
+2025-04-01 17:05:33,482 - INFO: 服务启动初始化完成
+2025-04-01 17:05:37,671 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 112, in register_wechat_user
+    cursor.execute(sql_check, (wechat_openid,))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1054, "Unknown column 'id' in 'field list'")
+2025-04-01 17:11:52,635 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 112, in register_wechat_user
+    cursor.execute(sql_check, (wechat_openid,))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.OperationalError: (1054, "Unknown column 'id' in 'field list'")
+2025-04-01 17:12:38,638 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_pxf1154y
+2025-04-01 17:12:38,641 - INFO: 服务启动初始化完成
+2025-04-01 17:12:40,262 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 124, in register_wechat_user
+    cursor.execute(sql_insert, (username, wechat_openid, phone,account))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1048, "Column 'username' cannot be null")
+2025-04-01 17:14:53,258 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 124, in register_wechat_user
+    cursor.execute(sql_insert, (username, wechat_openid, phone,account))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1048, "Column 'username' cannot be null")
+2025-04-01 17:15:04,480 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 92, in login_with_wechat
+    register_wechat_user(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 124, in register_wechat_user
+    INSERT INTO user (username, wechat_openid, phone, account,created_at)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 148, in execute
+    result = self._query(query)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\cursors.py", line 310, in _query
+    conn.query(q)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 548, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 775, in _read_query_result
+    result.read()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 1156, in read
+    first_packet = self.connection._read_packet()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\connections.py", line 725, in _read_packet
+    packet.raise_for_error()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\protocol.py", line 221, in raise_for_error
+    err.raise_mysql_exception(self._data)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\pymysql\err.py", line 143, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.IntegrityError: (1048, "Column 'username' cannot be null")
+2025-04-01 17:15:14,638 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_17zzy5cl
+2025-04-01 17:15:14,641 - INFO: 服务启动初始化完成
+2025-04-01 17:17:28,891 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ewou4zc8
+2025-04-01 17:17:28,894 - INFO: 服务启动初始化完成
+2025-04-01 17:17:37,493 - ERROR: Exception on /wechat_login [POST]
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 336, in wechat_login
+    result = database.login_with_wechat(wechat_openid)
+  File "d:\Psystem\Databased\DataBase\music\database.py", line 103, in login_with_wechat
+    return {"status": "success", "message": "登录成功", "user_id": user['user_id'], "username": user['username']}
+TypeError: 'NoneType' object is not subscriptable
+2025-04-01 17:19:08,868 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ne6_32oz
+2025-04-01 17:19:08,872 - INFO: 服务启动初始化完成
+2025-04-02 18:01:53,311 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_kifdn83a
+2025-04-02 18:04:58,432 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_3a54e2yp
+2025-04-02 18:07:16,075 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_j4eh5dww
+2025-04-02 18:11:43,463 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_9r47v1vz
+2025-04-02 18:13:54,249 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_5d7x3ilc
+2025-04-02 18:13:54,579 - INFO: 服务启动初始化完成
+2025-04-02 18:42:01,183 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_l7chuv1z
+2025-04-02 18:42:02,309 - INFO: 服务启动初始化完成
+2025-04-02 18:58:23,549 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_rwq0odur
+2025-04-02 18:58:24,505 - INFO: 服务启动初始化完成
+2025-04-02 19:04:28,707 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_oaohgvdm
+2025-04-02 19:04:29,632 - INFO: 服务启动初始化完成
+2025-04-02 19:06:59,112 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_z0hepqbm
+2025-04-02 19:06:59,459 - INFO: 服务启动初始化完成
+2025-04-02 19:21:03,559 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_sbnpz20k
+2025-04-02 19:21:03,902 - INFO: 服务启动初始化完成
+2025-04-02 19:22:44,277 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_r581az61
+2025-04-02 19:22:44,609 - INFO: 服务启动初始化完成
+2025-04-02 19:28:59,732 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ihziqj69
+2025-04-02 19:29:00,088 - INFO: 服务启动初始化完成
+2025-04-02 19:29:02,338 - ERROR: Exception on /api/ask-ai [POST]
+Traceback (most recent call last):
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 436, in ask_ai
+    response = client.chat.completions.create(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_utils\_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\resources\chat\completions\completions.py", line 914, in create
+    return self._post(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 919, in request
+    return self._request(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 1023, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Method Not Allowed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 457, in ask_ai
+    print("❌ 错误详情:", str(e))  # 调试日志
+UnicodeEncodeError: 'gbk' codec can't encode character '\u274c' in position 0: illegal multibyte sequence
+2025-04-02 19:30:57,155 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_fx9t7u0_
+2025-04-02 19:30:57,505 - INFO: 服务启动初始化完成
+2025-04-02 19:31:08,144 - ERROR: Exception on /api/ask-ai [POST]
+Traceback (most recent call last):
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 438, in ask_ai
+    response = client.chat.completions.create(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_utils\_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\resources\chat\completions\completions.py", line 914, in create
+    return self._post(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 919, in request
+    return self._request(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 1023, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Method Not Allowed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 459, in ask_ai
+    print("❌ 错误详情:", str(e))  # 调试日志
+UnicodeEncodeError: 'gbk' codec can't encode character '\u274c' in position 0: illegal multibyte sequence
+2025-04-02 19:32:38,630 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_kduqxo_v
+2025-04-02 19:32:38,978 - INFO: 服务启动初始化完成
+2025-04-02 19:32:39,580 - ERROR: Exception on /api/ask-ai [POST]
+Traceback (most recent call last):
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 438, in ask_ai
+    response = client.chat.completions.create(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_utils\_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\resources\chat\completions\completions.py", line 914, in create
+    return self._post(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 919, in request
+    return self._request(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 1023, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Method Not Allowed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 459, in ask_ai
+    print("❌ 错误详情:", str(e))  # 调试日志
+UnicodeEncodeError: 'gbk' codec can't encode character '\u274c' in position 0: illegal multibyte sequence
+2025-04-02 19:34:04,388 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_rllzzppj
+2025-04-02 19:34:04,720 - INFO: 服务启动初始化完成
+2025-04-02 19:34:13,557 - ERROR: Exception on /api/ask-ai [POST]
+Traceback (most recent call last):
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 438, in ask_ai
+    response = client.chat.completions.create(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_utils\_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\resources\chat\completions\completions.py", line 914, in create
+    return self._post(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 919, in request
+    return self._request(
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\openai\_base_client.py", line 1023, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Method Not Allowed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask_cors\extension.py", line 194, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\C\.conda\envs\tryagain\lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "d:\Psystem\Databased\DataBase\music\app.py", line 459, in ask_ai
+    print("❌ 错误详情:", str(e))  # 调试日志
+UnicodeEncodeError: 'gbk' codec can't encode character '\u274c' in position 0: illegal multibyte sequence
+2025-04-02 19:35:02,546 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_oowqds_b
+2025-04-02 19:35:02,895 - INFO: 服务启动初始化完成
+2025-04-02 19:40:56,551 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_npyn8mci
+2025-04-02 19:40:56,878 - INFO: 服务启动初始化完成
+2025-04-02 19:43:09,412 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_myud6p75
+2025-04-02 19:43:09,772 - INFO: 服务启动初始化完成
+2025-04-02 19:43:43,948 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_matbpk_h
+2025-04-02 19:43:44,298 - INFO: 服务启动初始化完成
+2025-04-02 19:44:14,722 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ci29_uxi
+2025-04-02 19:44:15,045 - INFO: 服务启动初始化完成
+2025-04-02 19:47:47,197 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_n03q93bt
+2025-04-02 19:47:47,529 - INFO: 服务启动初始化完成
+2025-04-03 18:05:42,436 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_8_tb68qm
+2025-04-03 18:07:33,112 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_zaa8vf7h
+2025-04-03 18:08:46,409 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music__b0owyny
+2025-04-03 18:09:33,278 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_5yk2dzwf
+2025-04-03 18:09:33,600 - INFO: 服务启动初始化完成
+2025-04-04 00:16:57,752 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_vf2v1hgw
+2025-04-04 00:16:58,188 - INFO: 服务启动初始化完成
+2025-04-04 00:20:27,390 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_tk3ih4y8
+2025-04-04 00:20:27,736 - INFO: 服务启动初始化完成
+2025-04-04 00:25:09,724 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_gl8subco
+2025-04-04 00:25:10,058 - INFO: 服务启动初始化完成
+2025-04-04 00:36:20,741 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ydeap_33
+2025-04-04 00:36:21,081 - INFO: 服务启动初始化完成
+2025-04-04 00:38:07,288 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_7f82vxrb
+2025-04-04 00:38:07,629 - INFO: 服务启动初始化完成
+2025-04-04 00:41:17,058 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ri_6sd9e
+2025-04-04 00:41:17,408 - INFO: 服务启动初始化完成
+2025-04-04 00:43:59,820 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_j6ysqtpo
+2025-04-04 00:44:00,184 - INFO: 服务启动初始化完成
+2025-04-04 01:16:53,216 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_858aol3p
+2025-04-04 01:16:53,558 - INFO: 服务启动初始化完成

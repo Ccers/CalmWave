@@ -21,7 +21,7 @@ import pymysql
 from openai import OpenAI
 from dotenv import load_dotenv#AI配置
 from flasgger import Swagger
-#http://localhost:5000/apidocs/  接口查看文档
+#http://113.45.206.40:5000/apidocs/  接口查看文档 服务器ip113.45.206.40
 # ====================
 # 应用初始化配置
 # ====================
@@ -908,15 +908,14 @@ SILICONFLOW_BASE_URL = "https://api.siliconflow.cn/v1"  # 替换为硅基流动�
 client = OpenAI(api_key=os.getenv("SILICONFLOW_API_KEY"),
                  base_url=SILICONFLOW_BASE_URL,  # 关键：覆盖默认的 OpenAI 地址
                 )
-
+# 使用字典存储不同用户的对话历史
+user_sessions = {}
 
 @app.route('/api/ask-ai', methods=['POST'])
 def ask_ai():
     """
     压力疏导AI对话
     ---
-    tags:
-      - AI服务
     parameters:
       - in: body
         name: body
@@ -926,56 +925,49 @@ def ask_ai():
           properties:
             question:
               type: string
-              description: 用户提问
-              example: "我感觉压力很大怎么办？"
+            user_id:  # 新增用户标识
+              type: string
     responses:
       200:
-        description: AI回复
-        schema:
-          type: object
-          properties:
-            answer:
-              type: string
-            status:
-              type: string
-      400:
-        description: 问题为空
-      500:
-        description: AI服务错误
+        description: 带对话历史的AI回复
     """
     try:
         data = request.get_json()
-        user_question = data.get("question", "").strip()
+        user_question = data.get("question", "")
+        user_id = data.get("user_id", "default")  # 默认用户
+        
         if not user_question:
             return jsonify({"error": "问题不能为空"}), 400
-        print("Entry")
-        # 检查 .env 是否加载成功
-        print("API_KEY:", os.getenv("SILICONFLOW_API_KEY"))  # 如果是 None，说明加载失败
-    
-        
-        # 调用OpenAI API
+
+        # 获取或初始化该用户的对话历史
+        if user_id not in user_sessions:
+            user_sessions[user_id] = [
+                {"role": "system", "content": "你是心理疏导助手小荔，用温暖、关怀的语气与用户交流，帮助缓解压力。"}
+            ]
+
+        # 添加用户问题到历史
+        user_sessions[user_id].append({"role": "user", "content": user_question})
+
+        # 调用API（始终发送完整历史）
         response = client.chat.completions.create(
-            model="deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",#模型
-            messages=[
-                {"role": "system", "content": "你是小荔，请向用户介绍自己是小荔并和用户聊天来缓解他的压力"},
-                {"role": "user", "content": user_question}
-            ],
+            model="deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+            messages=user_sessions[user_id][-6:],  # 限制最近6条
             temperature=0.7,
             max_tokens=500
         )
-        
+
+        # 添加AI回复到历史
         ai_response = response.choices[0].message.content
-        
- 
+        user_sessions[user_id].append({"role": "assistant", "content": ai_response})
+
         return jsonify({
             "answer": ai_response,
+            "history": user_sessions[user_id][1:],  # 返回除system外的历史
             "status": "success"
         })
-    
+
     except Exception as e:
         return jsonify({"error": str(e), "status": "error"}), 500
-
-
 
 
 # ====================
