@@ -1,0 +1,105 @@
+{
+   // 组件自动导入
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      // uni-ui 规则如下配置  
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue" ,
+      // uview  
+      "^u-(.*)": "uview-plus/components/u-$1/u-$1.vue",
+      // uview中up开头的组件
+      "^up-(.*)": "uview-plus/components/u-$1/u-$1.vue"
+    }
+  },
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "white",
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/my/my",
+      "style": {
+        "navigationBarTitleText": "我的",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/chat/chat",
+      "style": {
+        "navigationBarTitleText": "聊天",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/report/report",
+      "style": {
+        "navigationBarTitleText": "报表",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/gotochat/gotochat",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "chat"
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "subPackages",
+      "pages": [
+        {
+          "path": "login/login",
+          "style": {
+            "navigationBarTitleText": "登录"
+          }
+        }
+      ]
+    }
+],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  // 设置 TabBar
+  "tabBar": {
+    "color": "#333",
+    "selectedColor": "#004381",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "list": [
+      { 
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tabs/home.png",
+        "selectedIconPath": "static/tabs/home.png"
+      },
+      {
+        "text": "报表",
+        "pagePath": "pages/report/report",
+        "iconPath": "static/tabs/report.png",
+        "selectedIconPath": "static/tabs/report.png"
+      },
+      {
+        "text": "聊天",
+        "pagePath": "pages/chat/chat",
+        "iconPath": "static/tabs/chat.png",
+        "selectedIconPath": "static/tabs/chat.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/my/my",
+        "iconPath": "static/tabs/mine.png",
+        "selectedIconPath": "static/tabs/mine.png"
+      }
+    ]
+  }
+}
