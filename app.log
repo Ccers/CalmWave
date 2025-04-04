@@ -1583,3 +1583,21 @@ UnicodeEncodeError: 'gbk' codec can't encode character '\u274c' in position 0: i
 2025-04-04 00:44:00,184 - INFO: 服务启动初始化完成
 2025-04-04 01:16:53,216 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_858aol3p
 2025-04-04 01:16:53,558 - INFO: 服务启动初始化完成
+2025-04-04 12:39:38,617 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_npfk3uf0
+2025-04-04 12:39:38,987 - INFO: 服务启动初始化完成
+2025-04-04 12:40:26,095 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_84xacl02
+2025-04-04 12:40:26,440 - INFO: 服务启动初始化完成
+2025-04-04 13:57:00,859 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_td4ub172
+2025-04-04 13:57:01,196 - INFO: 服务启动初始化完成
+2025-04-04 14:07:56,256 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_h62eqyzd
+2025-04-04 14:07:56,625 - INFO: 服务启动初始化完成
+2025-04-04 14:42:12,433 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_95xa3dni
+2025-04-04 14:42:13,410 - INFO: 服务启动初始化完成
+2025-04-04 14:57:06,662 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_kr322m0o
+2025-04-04 14:57:07,610 - INFO: 服务启动初始化完成
+2025-04-04 14:58:47,300 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_vdxoclim
+2025-04-04 14:58:48,262 - INFO: 服务启动初始化完成
+2025-04-04 15:04:08,165 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_wfpocqge
+2025-04-04 15:04:09,168 - INFO: 服务启动初始化完成
+2025-04-04 15:07:30,306 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_qau80kjp
+2025-04-04 15:07:30,646 - INFO: 服务启动初始化完成

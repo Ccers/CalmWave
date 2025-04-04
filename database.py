@@ -3,6 +3,7 @@ import pymysql.cursors
 import bcrypt
 from werkzeug.exceptions import HTTPException
 from werkzeug.security import check_password_hash
+from utils import Data #返回值结构体
 
 class UserNotFoundError(HTTPException):  # 改为继承HTTPException
     code = 404  # 直接绑定状态码
@@ -58,7 +59,7 @@ def check_password(stored_password: bytes, provided_password: str) -> bool:
 
 #账户登录
 # 账号密码登录
-def login_with_account_password(account, password):
+def login_with_account_password(account:str, password:str)->Data:
     connection = get_db_connection()
     try:
         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
@@ -67,19 +68,26 @@ def login_with_account_password(account, password):
             user = cursor.fetchone()
 
             if not user:
-                return {"status": "error", "message": "用户不存在"}
+                return Data(code="404", msg="用户不存在", result=None)
+            
 
             # 验证密码
             if check_password(user['password'], password):
-                return {"status": "success", "message": "登录成功", "user_id": user['user_id'], "username": user['username']}
+                # 登录成功，返回账号和用户名
+                user_info = {
+                    "user_id": user['user_id'],
+                    "username": user['username'],
+                    "account": user['account']
+                }
+                return Data(code="200", msg="登录成功", result=user_info)
             else:
-                return {"status": "error", "message": "密码错误"}
+                return Data(code="401", msg="密码错误", result=None)
     finally:
         connection.close()
 
 #微信登陆
 # 微信登录
-def login_with_wechat(wechat_openid):
+def login_with_wechat(wechat_openid:str)->Data:
     connection = get_db_connection()
     try:
         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
@@ -100,12 +108,18 @@ def login_with_wechat(wechat_openid):
             user = cursor.fetchone()        
 
             if user:
-                return {"status": "success", "message": "登录成功", "user_id": user.get('user_id'), "username": user.get('username')}
+            # 登录成功，返回账号和用户名
+                user_info = {
+                    "user_id": user['user_id'],
+                    "username": user['username'],
+                    "account": user['account']
+                }
+                return Data(code="200", msg="登录成功", result=user_info)
             else:
-                return {"status": "error", "message": "用户信息不存在"}
+                return Data(code="401", msg="注册登录失败", result=None)
     finally:
         connection.close()
-def register_wechat_user(wechat_openid, username=None, phone=None):
+def register_wechat_user(wechat_openid:str, username:str=None, phone:str=None)-> Data:
     connection = get_db_connection()
     try:
         with connection.cursor() as cursor:
@@ -115,7 +129,7 @@ def register_wechat_user(wechat_openid, username=None, phone=None):
             existing_user = cursor.fetchone()
             
             if existing_user:
-                return {"status": "error", "message": "微信账号已注册"}
+                return Data(code="500", msg=f"微信账号已注册", result=None)
 
             # 插入新用户
             account=wechat_openid#将用户的微信戳作为账号主键
@@ -128,13 +142,13 @@ def register_wechat_user(wechat_openid, username=None, phone=None):
             """
             cursor.execute(sql_insert, (username, wechat_openid, phone,account))
             connection.commit()
-            return {"status": "success", "message": "微信用户注册成功"}
+            return Data(code="200", msg="微信用户注册成功", result=None)
     finally:
         connection.close()
 
 
 #用户添加
-def add_user(username, account, phone, password):
+def add_user(username:str, account:str, phone:str, password:str)->Data:
     hashed_password = hash_password(password)#对用户密码加密并存储加密后的密码
     connection =get_db_connection()
     try:
@@ -143,14 +157,14 @@ def add_user(username, account, phone, password):
             user_exists = cursor.fetchone()[0]  # 这会返回True/False
             if user_exists ==False:
                 sql ="""INSERT INTO user (username, account, phone,password)
-                VALUES (%s, %s, %s, %s)"""#gender用%s传入
+                VALUES (%s, %s, %s, %s)"""
                 cursor.execute(sql,(username, account, phone,hashed_password))
                 connection.commit()
                 print(account+"用户成功注册")
-        return {"status":"success","message":"用户成功注册"}
+        return Data(code="200", msg="用户成功注册", result=None)
     except pymysql.err.IntegrityError:
         print("账号已存在")
-        return {"status":"error","message":"账号已存在"}
+        return Data(code="500", msg="账号已存在", result=None)
     finally:
         connection.close()
 
@@ -160,22 +174,23 @@ def check_password(stored_password: str, provided_password: str) -> bool:
 
 
 #添加新的蓝牙设备
-def add_bluetooth_device(device_id, device_name,mac_address):
+def add_bluetooth_device(device_id:str, device_name:str,mac_address:str)->Data:
     connection = get_db_connection()
     try:
         with connection.cursor() as cursor:
             sql = "INSERT INTO bluetooth_device (device_id, device_name,mac_address,last_connected_time) VALUES (%s, %s,%s,Now())"
             cursor.execute(sql, (device_id, device_name,mac_address))
         connection.commit()
-        return {"status": "success", "message": "蓝牙设备添加成功"}
+        return Data(code="200", msg="蓝牙设备添加成功", result=None)
+    
     except pymysql.MySQLError as e:
-        return {"status": "error", "message": str(e)}
+        return Data(code="500", msg=f"数据库异常: {str(e)}", result=None)
     finally:
         connection.close()
 
 
 #蓝牙设备链接记录
-def record_device_connection(account,device_id,status,device_name,mac_address):
+def record_device_connection(account:str,device_id:str,status:str,device_name:str,mac_address:str)-> Data:
     connection =get_db_connection()
     try:
         with connection.cursor() as cursor:
@@ -208,7 +223,7 @@ def record_device_connection(account,device_id,status,device_name,mac_address):
                 cursor.execute(sql,(device_id))
 
         connection.commit()
-        return{"status": "success", "message": f"设备 {status} 记录成功"}
+        return Data(code="200", msg="设备添加成功", result=None)
     
     except pymysql.Error as e:
         connection.rollback()
@@ -216,7 +231,7 @@ def record_device_connection(account,device_id,status,device_name,mac_address):
     finally:
         connection.close()
 # 存储压力数据
-def store_pressure_data(account, pressure_value, device_id=None):
+def store_pressure_data(account: str, pressure_value: float, device_id: str = None) -> Data:
     connection = get_db_connection()
     try:
         with connection.cursor() as cursor:
@@ -227,13 +242,13 @@ def store_pressure_data(account, pressure_value, device_id=None):
             cursor.execute(sql, (account, pressure_value, device_id))
         connection.commit()
       
-        return {"status": "success", "message": "压力数据存储成功"}
+        return Data(code="200", msg="压力数据存储成功", result=None)
     except pymysql.MySQLError as e:
-        return {"status": "error", "message": str(e)}
+        return Data(code="500", msg=f"数据库异常: {str(e)}", result=None)
     finally:
         connection.close()
 # 获取同一天的压力数据
-def get_pressure_data(account, date):
+def get_pressure_data(account: str,  date:str)-> Data:
     """
     :param account: 用户账号
     :param date: 查询的日期 (格式: 'YYYY-MM-DD')
@@ -251,9 +266,9 @@ def get_pressure_data(account, date):
             cursor.execute(sql, params)
             result = cursor.fetchall()
 
-        return {"status": "success", "data": result}
+        return Data(code="200", msg="压力数据获取成功", result=result)
     except pymysql.MySQLError as e:
-        return {"status": "error", "message": str(e)}
+        return Data(code="500", msg=f"数据库异常: {str(e)}", result=None)
     finally:
         connection.close()
 #聊天

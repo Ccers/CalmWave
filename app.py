@@ -21,6 +21,7 @@ import pymysql
 from openai import OpenAI
 from dotenv import load_dotenv#AI配置
 from flasgger import Swagger
+from utils import Data  # Assuming you have a similar toast utility
 #http://113.45.206.40:5000/apidocs/  接口查看文档 服务器ip113.45.206.40
 # ====================
 # 应用初始化配置
@@ -362,38 +363,56 @@ def handle_generate():
 @app.route('/download/<filename>')
 def download(filename):
     """
-    账号密码登录
+    下载MP3文件
     ---
     tags:
-      - 用户认证
+      - 音乐生成
     parameters:
-      - in: body
-        name: body
+      - name: filename
+        in: path
+        type: string
         required: true
-        schema:
-          type: object
-          properties:
-            account:
-              type: string
-              example: "user123"
-            password:
-              type: string
-              example: "mypassword"
+        description: The name of the MP3 file to download
+        example: example.mp3
     responses:
       200:
-        description: 登录结果
-        schema:
-          type: object
-          properties:
-            status:
+        description: MP3 file
+        content:
+          audio/mpeg:
+            schema:
               type: string
-              enum: ["success", "error"]
-            message:
-              type: string
+              format: binary
       400:
-        description: 参数缺失
+        description: Invalid file type
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: Invalid file type
+      404:
+        description: File not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: Resource not found
+      500:
+        description: Server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: File service error
     """
-    
     try:
         # 安全验证增强
         safe_name = secure_filename(filename.strip())
@@ -425,7 +444,7 @@ def download(filename):
 @app.route('/user', methods=['GET'])
 def get_user():
     """
-    获取用户信息
+    获取用户所有信息
     ---
     tags:
       - 用户管理
@@ -477,10 +496,13 @@ def get_user():
 
     account = request.args.get('account')
     if not account:
-        return jsonify({"status": "error", "message": "缺少 account 参数"})
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
     
     user_data = database.get_user(account)
-    return jsonify(user_data if user_data else {"status": "error", "message": "用户不存在"})
+    
+    if not user_data:
+      return (Data(code="404", msg="用户不存在").__dict__), 400
+    return jsonify(user_data.__dict__), user_data.code
 #账号密码登录
 @app.route('/login', methods=['POST'])
 def login():
@@ -488,7 +510,7 @@ def login():
     账号密码登录
     ---
     tags:
-      - 用户认证
+      - 用户管理
     parameters:
       - in: body
         name: body
@@ -547,15 +569,15 @@ def login():
               example: "账号或密码错误"
     """
 
-    data = request.json
+    data = request.get_json()
     account = data.get('account')
     password = data.get('password')
 
     if not account or not password:
-        return jsonify({"status": "error", "message": "账号和密码不能为空"}), 400
+        return jsonify(Data(code="400", msg="账号和密码不能为空").__dict__), 400
 
     result = database.login_with_account_password(account, password)
-    return jsonify(result)
+    return jsonify(result.__dict__), result.code
 #微信登陆
 @app.route('/wechat_login', methods=['POST'])
 def wechat_login():
@@ -563,7 +585,7 @@ def wechat_login():
     微信登录
     ---
     tags:
-      - 用户认证
+      - 用户管理
     parameters:
       - in: body
         name: body
@@ -613,14 +635,14 @@ def wechat_login():
               type: string
               example: "请先完成微信账号注册"
     """
-    data = request.json
+    data = request.get_json()
     wechat_openid = data.get('wechat_openid')
 
     if not wechat_openid:
-        return jsonify({"status": "error", "message": "微信openid不能为空"}), 400
+        return jsonify(Data(code="400", msg="参数不能为空").__dict__), 400
 
     result = database.login_with_wechat(wechat_openid)
-    return jsonify(result)
+    return jsonify(result.__dict__), result.code
 
 
 #注册用户
@@ -685,13 +707,14 @@ def register_user():
               type: string
               example: "账号已被注册"
     """
-    data = request.json
+    data = request.get_json()
     print(data["account"]+"resiger")
     if not all(k in data for k in ("username", "account", "phone","password")):
-        return jsonify({"status": "error", "message": "参数不完整"})
+        return jsonify(Data(code="400", msg="参数不完整").__dict__), 400
 
     result = database.add_user(data["username"], data["account"], data["phone"], data["password"])
-    return jsonify(result)
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code
 class UserNotFoundError(Exception):
     """自定义用户不存在异常"""
     def __init__(self, account):
@@ -705,7 +728,7 @@ def connect_device():
     记录设备连接历史
     ---
     tags:
-      - 设备管理
+      - 用户设备管理
     parameters:
       - in: body
         name: body
@@ -755,14 +778,15 @@ def connect_device():
     """
     data = request.get_json()  # 更安全的获取方式
     if not data or not all(k in data for k in ("account", "device_id", "status", "device_name", "mac_address")):
-        return {"status": "error", "message": "Missing parameters"}, 400
+        return jsonify(Data(code="400", msg="填入数值不能为空").__dict__), 400
     
     # 不再需要try-catch，交由Flask处理
     result = database.record_device_connection(
         data["account"], data["device_id"], data["status"],
         data["device_name"], data["mac_address"]
     )
-    return {"status": "success", "data": result}
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code
 
 
 
@@ -773,7 +797,7 @@ def store_pressure():
     存储用户压力数据
     ---
     tags:
-      - 数据记录
+      - 用户压力数据管理
     parameters:
       - in: body
         name: body
@@ -799,17 +823,19 @@ def store_pressure():
       400:
         description: 参数缺失
     """
-    data = request.json
+    data = request.get_json()
     account = data.get('account')
     pressure_value = data.get('pressure_value')
     device_id = data.get('device_id', None)
 
 
     if not account or pressure_value is None:
-        return jsonify({"status": "error", "message": "账号和压力值不能为空"}), 400
+        return jsonify(Data(code="400", msg="账号和压力值不能为空").__dict__), 400
 
     result = database.store_pressure_data(account, pressure_value, device_id)
-    return jsonify(result)
+       
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code
 
 # 获取同一天的压力数据接口
 @app.route('/get_pressure', methods=['GET'])
@@ -818,7 +844,7 @@ def get_pressure():
     获取用户指定日期的压力数据
     ---
     tags:
-      - 压力数据
+      - 用户压力数据管理
     parameters:
       - name: account
         in: query
@@ -888,18 +914,18 @@ def get_pressure():
               items: {}
               example: []
     """
-    account = request.args.get('account')
-    date = request.args.get('date')
+    args = request.parsed_args
 
-    account = request.args.get('account')
-    date = request.args.get('date')
+    account = args['account']
+    date = args['date']
 
 
     if not account or not date:
-        return jsonify({"status": "error", "message": "账号和日期不能为空"}), 400
+        return jsonify(Data(code="400", msg="账号和日期不能为空").__dict__), 400
 
     result = database.get_pressure_data(account, date)
-    return jsonify(result)
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code
 #AI聊天
 # 加载环境变量
 load_dotenv('D:\Psystem\Databased\DataBase\music\CalmwaveAPI.env')#env中存放了API
@@ -916,6 +942,8 @@ def ask_ai():
     """
     压力疏导AI对话
     ---
+    tags:
+      - AI聊天
     parameters:
       - in: body
         name: body
@@ -937,7 +965,7 @@ def ask_ai():
         user_id = data.get("user_id", "default")  # 默认用户
         
         if not user_question:
-            return jsonify({"error": "问题不能为空"}), 400
+            return jsonify(Data(code="400", msg="问题不能为空").__dict__), 400
 
         # 获取或初始化该用户的对话历史
         if user_id not in user_sessions:
@@ -947,11 +975,12 @@ def ask_ai():
 
         # 添加用户问题到历史
         user_sessions[user_id].append({"role": "user", "content": user_question})
+        print("已经调用AI接口")
 
         # 调用API（始终发送完整历史）
         response = client.chat.completions.create(
             model="deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
-            messages=user_sessions[user_id][-6:],  # 限制最近6条
+            messages=user_sessions[user_id][-6:],  # 限制最近6条 
             temperature=0.7,
             max_tokens=500
         )
@@ -960,14 +989,15 @@ def ask_ai():
         ai_response = response.choices[0].message.content
         user_sessions[user_id].append({"role": "assistant", "content": ai_response})
 
-        return jsonify({
+        result = {
             "answer": ai_response,
-            "history": user_sessions[user_id][1:],  # 返回除system外的历史
-            "status": "success"
-        })
+            "history": user_sessions[user_id][1:]  # 不包括 system 的首条
+        }
+        return jsonify(Data(code="200", msg="AI回复成功", result=result).__dict__)
 
     except Exception as e:
-        return jsonify({"error": str(e), "status": "error"}), 500
+        return jsonify(Data(code="500", msg=f"服务异常: {str(e)}", result=None).__dict__), 500
+            
 
 
 # ====================
