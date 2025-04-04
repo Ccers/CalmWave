@@ -27,10 +27,11 @@ from utils import Data  # Assuming you have a similar toast utility
 # 应用初始化配置
 # ====================
 app = Flask(__name__)
-CORS(app, resources={r"/*": {
-    "origins": "*",
-    "methods": ["GET", "POST", "PUT", "DELETE"],
-    "allow_headers": ["Content-Type", "Authorization"]# 允许的请求头
+# 全局跨域配置（推荐使用这种最稳的方式）
+CORS(app, supports_credentials=True, resources={r"/*": {
+    "origins": "*",  # 或改成 ['http://localhost:3000', 'http://你的前端域名']
+    "allow_headers": ["Content-Type", "Authorization"],
+    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }})
 # Swagger 配置 (修改为以下形式)
 swagger_config = {
@@ -75,6 +76,22 @@ Swagger(app,
     },
     config=swagger_config  # 传入配置
 )
+@app.before_request
+def handle_options():
+    if request.method == "OPTIONS":
+        response = app.make_response('')
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        return response
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    return response
+
+
 # ====================
 # 日志系统配置
 # ====================
@@ -570,6 +587,7 @@ def login():
     """
 
     data = request.get_json()
+    print("请求数据：", data)
     account = data.get('account')
     password = data.get('password')
 
@@ -1005,4 +1023,4 @@ def ask_ai():
 # ====================
 if __name__ == '__main__':
     app.logger.info("服务启动初始化完成")
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=True)
