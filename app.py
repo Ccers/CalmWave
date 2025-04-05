@@ -932,10 +932,10 @@ def get_pressure():
               items: {}
               example: []
     """
-    args = request.parsed_args
+    args = request.args
 
-    account = args['account']
-    date = args['date']
+    account = args.get('account')
+    date = args.get('date')
 
 
     if not account or not date:
@@ -971,7 +971,7 @@ def ask_ai():
           properties:
             question:
               type: string
-            user_id:  # 新增用户标识
+            account:  # 新增用户标识
               type: string
     responses:
       200:
@@ -980,36 +980,36 @@ def ask_ai():
     try:
         data = request.get_json()
         user_question = data.get("question", "")
-        user_id = data.get("user_id", "default")  # 默认用户
+        account = data.get("account", "default")  # 默认用户
         
         if not user_question:
             return jsonify(Data(code="400", msg="问题不能为空").__dict__), 400
 
         # 获取或初始化该用户的对话历史
-        if user_id not in user_sessions:
-            user_sessions[user_id] = [
-                {"role": "system", "content": "你是心理疏导助手小荔，用温暖、关怀的语气与用户交流，帮助缓解压力。"}
+        if account not in user_sessions:
+            user_sessions[account] = [
+                {"role": "system", "content": "你是心理疏导助手小荔，用温暖、关怀的语气简洁地与用户交流，帮助缓解压力，用户不希望阅读过多的字。"}
             ]
 
         # 添加用户问题到历史
-        user_sessions[user_id].append({"role": "user", "content": user_question})
+        user_sessions[account].append({"role": "user", "content": user_question})
         print("已经调用AI接口")
 
         # 调用API（始终发送完整历史）
         response = client.chat.completions.create(
             model="deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
-            messages=user_sessions[user_id][-6:],  # 限制最近6条 
+            messages=user_sessions[account][-6:],  # 限制最近6条 
             temperature=0.7,
             max_tokens=500
         )
 
         # 添加AI回复到历史
         ai_response = response.choices[0].message.content
-        user_sessions[user_id].append({"role": "assistant", "content": ai_response})
+        user_sessions[account].append({"role": "assistant", "content": ai_response})
 
         result = {
             "answer": ai_response,
-            "history": user_sessions[user_id][1:]  # 不包括 system 的首条
+            "history": user_sessions[account][1:]  # 不包括 system 的首条
         }
         return jsonify(Data(code="200", msg="AI回复成功", result=result).__dict__)
 

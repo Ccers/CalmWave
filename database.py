@@ -75,7 +75,7 @@ def login_with_account_password(account:str, password:str)->Data:
             if check_password(user['password'], password):
                 # 登录成功，返回账号和用户名
                 user_info = {
-                    "user_id": user['user_id'],
+                    
                     "username": user['username'],
                     "account": user['account']
                 }
@@ -110,7 +110,7 @@ def login_with_wechat(wechat_openid:str)->Data:
             if user:
             # 登录成功，返回账号和用户名
                 user_info = {
-                    "user_id": user['user_id'],
+                   
                     "username": user['username'],
                     "account": user['account']
                 }
@@ -201,8 +201,9 @@ def record_device_connection(account:str,device_id:str,status:str,device_name:st
                 if device_exists == False:
                     add_bluetooth_device(device_id, device_name,mac_address)
                 # 检查用户是否存在（这里会抛出UserNotFoundError）
-                cursor.execute("SELECT 1 FROM user WHERE account = %s LIMIT 1", (account,))
-                if  cursor.fetchone()==True:
+                cursor.execute("SELECT EXISTS(SELECT 1 FROM user WHERE account = %s)", (account,))
+                user_ex=cursor.fetchone()[0]  
+                if  user_ex==True:
                     print("用户存在")
                     sql="""INSERT INTO device_connection_history (account, device_id, connection_time, connection_status)
                     VALUES (%s, %s, NOW(), '已连接')
@@ -250,7 +251,7 @@ def store_pressure_data(account: str, pressure_value: float, device_id: str = No
 # 获取同一天的压力数据
 def get_pressure_data(account: str,  date:str)-> Data:
     """
-    :param account: 用户账号
+    :param account: 用户账号 
     :param date: 查询的日期 (格式: 'YYYY-MM-DD')
     """
     connection = get_db_connection()
