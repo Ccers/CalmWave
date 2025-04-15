@@ -738,7 +738,45 @@ class UserNotFoundError(Exception):
     def __init__(self, account):
         self.account = account
         super().__init__(f"Account {account} exit")
+#用户注销
+@app.route('/user_delete', methods=['GET'])
+def delete_user_data():
+    data = request.get_json()
+    account = data.get('account')
+    
+    if  account is None:
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
 
+    result = database.delete_user(account)
+       
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code
+#压力记录删除
+@app.route('/pressure_delete', methods=['GET'])
+def delete_pressure_data():
+    data = request.get_json()
+    account = data.get('account')
+    
+    if  account  is None:
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
+
+    result = database.delete_pressure_data_form(account)
+       
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code 
+#蓝牙记录删除
+@app.route('/device/delete', methods=['GET'])
+def delete_device_connection_form():
+    data = request.get_json()
+    account = data.get('account')
+    
+    if  account  is None:
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
+
+    result = database.delete_device_connection_form(account)
+       
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code 
 # 记录设备连接历史
 @app.route('/device/connect', methods=['POST'])
 def connect_device():

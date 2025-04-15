@@ -167,7 +167,169 @@ def add_user(username:str, account:str, phone:str, password:str)->Data:
         return Data(code="500", msg="账号已存在", result=None)
     finally:
         connection.close()
+#删除压力数据
+def delete_pressure_data_form(account: str) -> Data:
+    connection = get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # 1. 检查用户是否存在（更可靠的检查方式）
+            cursor.execute("SELECT account FROM user WHERE account = %s", (account,))
+            user_record = cursor.fetchone()
+            
+            if not user_record:  # 更明确的检查方式
+                return Data(code="404", msg=f"用户 {account} 不存在", result=None)
+            
+            # 2. 删除压力数据
+            try:
+                cursor.execute("DELETE FROM pressure_data WHERE account = %s", (account,))
+                affected_rows = cursor.rowcount
+                
+                # 3. 验证删除结果（可选）
+                cursor.execute("SELECT COUNT(1) FROM pressure_data WHERE account = %s", (account,))
+                remaining_records = cursor.fetchone()[0]
+                
+                if remaining_records == 0:
+                    connection.commit()
+                    return Data(
+                        code="200", 
+                        msg=f"成功删除 {affected_rows} 条压力数据", 
+                        result=None
+                    )
+                else:
+                    connection.rollback()
+                    return Data(
+                        code="500", 
+                        msg=f"删除不完整，仍剩余 {remaining_records} 条记录", 
+                        result=None
+                    )
+                    
+            except pymysql.MySQLError as e:
+                connection.rollback()
+                return Data(
+                    code="500", 
+                    msg=f"删除压力数据时出错: {str(e)}", 
+                    result=None
+                )
+                
+    except pymysql.MySQLError as e:
+        return Data(code="500", msg=f"数据库操作异常: {str(e)}", result=None)
+    finally:
+        connection.close()
+        #删除压力
+def delete_pressure_data(account: str, cursor) -> bool:
+    """删除压力表数据，返回是否成功"""
+    try:
+        cursor.execute("DELETE FROM pressure_data WHERE account = %s", (account,))
+        return True
+    except pymysql.MySQLError:
+        return False
+#删除蓝牙连接数据
+def delete_device_connection_form(account: str) -> Data:
+    """删除指定账户的蓝牙设备连接记录"""
+    connection = get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # 1. 更可靠的用户存在检查
+            cursor.execute("SELECT 1 FROM user WHERE account = %s LIMIT 1", (account,))
+            if not cursor.fetchone():
+                return Data(code="404", msg=f"账户 {account} 不存在", result=None)
+            
+            # 2. 删除设备连接记录
+            try:
+                # 先获取要删除的记录数（用于返回信息）
+                cursor.execute("SELECT COUNT(1) FROM device_connection_history WHERE account = %s", (account,))
+                record_count = cursor.fetchone()[0]
+                
+                if record_count > 0:
+                    cursor.execute("DELETE FROM device_connection_history WHERE account = %s", (account,))
+                    deleted_rows = cursor.rowcount
+                    
+                    # 验证删除结果
+                    cursor.execute("SELECT COUNT(1) FROM device_connection_history WHERE account = %s", (account,))
+                    remaining = cursor.fetchone()[0]
+                    
+                    if remaining == 0:
+                        connection.commit()
+                        return Data(
+                            code="200",
+                            msg=f"成功删除 {deleted_rows} 条蓝牙连接记录",
+                            result={"deleted_records": deleted_rows}
+                        )
+                    else:
+                        connection.rollback()
+                        return Data(
+                            code="500",
+                            msg=f"删除不完整，应删除 {record_count} 条，实际删除 {deleted_rows} 条",
+                            result=None
+                        )
+                else:
+                    connection.commit()  # 没有记录也算成功
+                    return Data(
+                        code="200",
+                        msg="该账户没有蓝牙连接记录可删除",
+                        result={"deleted_records": 0}
+                    )
+                        
+            except pymysql.MySQLError as e:
+                connection.rollback()
+                return Data(
+                    code="500",
+                    msg=f"删除蓝牙连接记录时出错: {str(e)}",
+                    result=None
+                )
+                
+    except pymysql.MySQLError as e:
+        return Data(
+            code="500",
+            msg=f"数据库操作异常: {str(e)}",
+            result=None
+        )
+    finally:
+        connection.close()
 
+def delete_device_connection_history(account: str, cursor) -> bool:
+    """删除蓝牙连接数据，返回是否成功"""
+    try:
+        cursor.execute("DELETE FROM device_connection_history WHERE account = %s", (account,))
+        return True
+    except pymysql.MySQLError:
+        return False
+#注销用户
+def delete_user(account: str) -> Data:
+    connection = get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # 检查用户是否存在
+            cursor.execute("SELECT COUNT(1) FROM user WHERE account = %s", (account,))
+            if not cursor.fetchone()[0] > 0:
+                return Data(code="404", msg="用户不存在", result=None)
+            
+            # 删除关联数据
+            pressure_deleted = delete_pressure_data(account, cursor)
+            device_deleted = delete_device_connection_history(account, cursor)
+            
+            # 删除用户主记录
+            cursor.execute("DELETE FROM user WHERE account = %s", (account,))
+            
+            # 验证是否删除成功
+            cursor.execute("SELECT COUNT(1) FROM user WHERE account = %s", (account,))
+            if cursor.fetchone()[0] == 0:
+                connection.commit()
+                msg = "用户成功删除"
+                if not pressure_deleted:
+                    msg += " (压力数据删除失败)"
+                if not device_deleted:
+                    msg += " (蓝牙数据删除失败)"
+                return Data(code="200", msg=msg, result=None)
+            
+            connection.rollback()
+            return Data(code="500", msg="删除失败", result=None)
+                
+    except pymysql.MySQLError as e:
+        connection.rollback()
+        return Data(code="500", msg=f"数据库异常: {str(e)}", result=None) 
+    finally:
+        connection.close()
 # 登录时调用将提供的密码和存储的密码进行比较
 def check_password(stored_password: str, provided_password: str) -> bool:
     return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password.encode('utf-8'))
