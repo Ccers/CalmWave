@@ -4,7 +4,8 @@ import bcrypt
 from werkzeug.exceptions import HTTPException
 from werkzeug.security import check_password_hash
 from utils import Data #返回值结构体
-
+import json
+import random
 class UserNotFoundError(HTTPException):  # 改为继承HTTPException
     code = 404  # 直接绑定状态码
     description = "User not found"
@@ -223,6 +224,22 @@ def delete_pressure_data(account: str, cursor) -> bool:
         return True
     except pymysql.MySQLError:
         return False
+    #删除基准数值
+
+def delete_baseline_physiological_signals(account: str, cursor)->bool:
+    """删除基准数值"""
+    try:
+        cursor.execute("DELETE FROM baseline_physiological_signals WHERE account = %s", (account,))
+        return True
+    except pymysql.MySQLError:
+        return False
+def delete_personal_prompts(account: str, cursor)->bool:
+    """删除用户个性化prompts"""
+    try:
+        cursor.execute("DELETE FROM user_music_prompts WHERE account = %s", (account,))
+        return True
+    except pymysql.MySQLError:
+        return False
 #删除蓝牙连接数据
 def delete_device_connection_form(account: str) -> Data:
     """删除指定账户的蓝牙设备连接记录"""
@@ -307,6 +324,8 @@ def delete_user(account: str) -> Data:
             # 删除关联数据
             pressure_deleted = delete_pressure_data(account, cursor)
             device_deleted = delete_device_connection_history(account, cursor)
+            baseline_phy_signals=delete_baseline_physiological_signals(account,cursor)
+            personal_prompts_deleted= delete_personal_prompts(account,cursor)
             
             # 删除用户主记录
             cursor.execute("DELETE FROM user WHERE account = %s", (account,))
@@ -320,6 +339,10 @@ def delete_user(account: str) -> Data:
                     msg += " (压力数据删除失败)"
                 if not device_deleted:
                     msg += " (蓝牙数据删除失败)"
+                if not  baseline_phy_signals:
+                    msg += " (基准数值数据删除失败)"
+                if not  personal_prompts_deleted:
+                    msg += "(个性化prompts删除失败)"
                 return Data(code="200", msg=msg, result=None)
             
             connection.rollback()
@@ -345,6 +368,70 @@ def add_bluetooth_device(device_id:str, device_name:str,mac_address:str)->Data:
         connection.commit()
         return Data(code="200", msg="蓝牙设备添加成功", result=None)
     
+    except pymysql.MySQLError as e:
+        return Data(code="500", msg=f"数据库异常: {str(e)}", result=None)
+    finally:
+        connection.close()
+
+#测量基准数值
+def record_baseline_physiological_signals(account:str,Heart_rate:str,Blood_pressure :str,
+skin_conductance :str,skin_temperature:str)->Data:
+    connection =get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # 检查用户是否存在（这里会抛出UserNotFoundError）
+                cursor.execute("SELECT EXISTS(SELECT 1 FROM user WHERE account = %s)", (account,))
+                user_ex=cursor.fetchone()[0]
+                if  user_ex==True:
+                    print("用户存在")
+                    cursor.execute("SELECT EXISTS(SELECT 1 FROM baseline_physiological_signals WHERE account = %s)", (account,))
+                    prompts_ex=cursor.fetchone()[0]
+                    if prompts_ex==True:#检查是更新数据还是插入数据
+                        sql="""update calmwave_databases.baseline_physiological_signals
+                            set Heart_rate = %s,
+                            Blood_pressure=%s,
+                            skin_conductance =%s ,
+                            skin_temperature=%s
+                            where account = %s
+                    """
+                        cursor.execute(sql,(Heart_rate,Blood_pressure,skin_conductance,skin_temperature,account))
+    
+                    elif prompts_ex==False:
+                        sql="""INSERT INTO baseline_physiological_signals (account, Heart_rate,Blood_pressure,
+                    skin_conductance ,skin_temperature)
+                    VALUES (%s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(sql,(account,Heart_rate,Blood_pressure,skin_conductance,skin_temperature)) 
+                else:
+                    raise UserNotFoundError(account)  
+
+                   
+        connection.commit()
+        return Data(code="200", msg="基准信息测量成功", result=None)
+
+    except pymysql.Error as e:
+        connection.rollback()
+        raise  # 重新抛出数据库异常
+    finally:
+        connection.close()
+#获取基准数据
+def get_baseline_physiological_signals(account:str)->Data:
+    connection =get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # 检查用户是否存在（这里会抛出UserNotFoundError）
+                cursor.execute("SELECT EXISTS(SELECT 1 FROM user WHERE account = %s)", (account,))
+                user_ex=cursor.fetchone()[0]
+                if  user_ex==True:
+                    sql="""SElECT * From baseline_physiological_signals where account=%s"""
+                    params = [account]
+
+                    cursor.execute(sql, params)
+                    result = cursor.fetchall()
+                else:
+                    raise UserNotFoundError(account)
+
+        return Data(code="200", msg="基准数据获取成功", result=result)
     except pymysql.MySQLError as e:
         return Data(code="500", msg=f"数据库异常: {str(e)}", result=None)
     finally:
@@ -435,6 +522,170 @@ def get_pressure_data(account: str,  date:str)-> Data:
     finally:
         connection.close()
 #聊天
+#个性化prompts调取
+def get_personal_prompts(account:str)->Data: 
+    connection = get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT EXISTS(SELECT 1 FROM user WHERE account = %s)", (account,))
+            user_ex=cursor.fetchone()[0]
+            if  user_ex==True:
+                # 基础 SQL 语句
+                sql = """
+                SELECT * FROM user_music_prompts
+                WHERE account = %s 
+                """
+                params = [account]
+
+                cursor.execute(sql, params)
+                result = cursor.fetchall()
+            else:
+                raise UserNotFoundError(account)
+
+        return Data(code="200", msg="用户prompts获取成功", result=result)
+    except pymysql.MySQLError as e:
+        return Data(code="500", msg=f"数据库异常: {str(e)}", result=None)
+    finally:
+        connection.close()
+#个性化prompts存储
+def store_personal_prompts(account:str,genre:str, mood:str, tempo:str,additional_requirements:str=None)->Data:
+    connection =get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # 检查用户是否存在（这里会抛出UserNotFoundError）
+                cursor.execute("SELECT EXISTS(SELECT 1 FROM user WHERE account = %s)", (account,))
+                user_ex=cursor.fetchone()[0]
+                if  user_ex==True:
+                    print("用户存在")
+                    cursor.execute("SELECT EXISTS(SELECT 1 FROM user_music_prompts WHERE account = %s)", (account,))
+                    prompts_ex=cursor.fetchone()[0]
+                    if prompts_ex==True:#检查是更新数据还是插入数据 music_style emotion tempo personal_needs
+                        sql="""update calmwave_databases.user_music_prompts
+                            set music_style = %s,
+                            emotion=%s,
+                            tempo =%s ,
+                            personal_needs=%s
+                            where account = %s
+                    """
+                        cursor.execute(sql,(genre, mood, tempo , additional_requirements,account))
+    
+                    elif prompts_ex==False:
+                        sql="""INSERT INTO user_music_prompts (account, music_style,emotion,
+                    tempo ,personal_needs)
+                    VALUES (%s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(sql,(account,genre, mood, tempo , additional_requirements)) 
+                else:
+                    raise UserNotFoundError(account)  
+
+                   
+        connection.commit()
+        return Data(code="200", msg="用户个性化prompts存储成功", result=None)
+
+    except pymysql.Error as e:
+        connection.rollback()
+        raise  # 重新抛出数据库异常
+    finally:
+        connection.close()
+#查询templematin
+def get_temperature(pressure_level:str, cursor)->float:
+    """获得tem,返回是否成功"""
+    try:
+        temperature=cursor.execute("SELECT temperature FROM pressure_levels WHERE pressure_level = %s", (pressure_level,))
+        return temperature
+    except pymysql.MySQLError:
+        return 0.0
+#查询基准prompt
+def get_prompt(account:str,pressure_value:str)->Data:
+    connection =get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # 检查用户是否存在（这里会抛出UserNotFoundError）
+                temperature=get_temperature(pressure_value,cursor)
+                sql="""SElECT prompts From baseline_music_prompts where pressure_level=%s"""
+                params = [pressure_value]
+                cursor.execute(sql,params)
+                prompts=cursor.fetchall() 
+              
+                
+                selected = random.choice(prompts)[0]  # 提取元组中的第一个元素
+                sql="""SELECT CONCAT(COALESCE(music_style, ''), ',', COALESCE(emotion, ''), ',', COALESCE(tempo, ''),',',COALESCE(personal_needs, '')) AS pre_prompt From user_music_prompts where account=%s"""
+                params = [account]
+                cursor.execute(sql,params)
+                pre_prompt=cursor.fetchall()
+                pre_prompt = " ".join([prompt[0] for prompt in pre_prompt]) if pre_prompt else "" 
+                out_prompts=selected+","+pre_prompt
+
+
+                
+
+        return Data(code="200", msg="基准数据获取成功", result={"out_prompts": out_prompts, "temperature": temperature})
+    except pymysql.MySQLError as e:
+        return Data(code="500", msg=f"数据库异常: {str(e)}", result=None)
+    finally:
+        connection.close()
+#存储store_feedback_data
+def store_feedback_data(selectedType:str,feedbackContent:str,contact: str,account: str,images: str=None):
+    connection =get_db_connection()
+    # 如果 images 参数为空，将其设置为一个空的 JSON 数组
+    images_json = json.dumps(images) if images else json.dumps([])
+    try:
+        with connection.cursor() as cursor:
+            sql = """
+            INSERT INTO feedback_data (selectedType,feedbackContent,contact,account,images,feedback_time)
+            VALUES (%s, %s, %s,%s, %s,NOW())
+            """
+            cursor.execute(sql, (selectedType,feedbackContent,contact,account,images_json))
+            connection.commit()
+      
+        return Data(code="200", msg="意见反馈表数据存储成功", result=None)
+    except pymysql.MySQLError as e:
+        return Data(code="500", msg=f"数据库异常: {str(e)}", result=None)
+    finally:
+        connection.close()
+#报表获取压力
+def get_day_pressure(account:str,date:str)->Data:
+    connection = get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # 基础 SQL 语句
+            sql = """
+             SELECT
+                HOUR(record_time) AS hour,
+                IFNULL(AVG(pressure_value), 0) AS avg_pressure
+            FROM
+                pressure_data
+            WHERE
+                account = %s
+                AND DATE(record_time) = %s
+            GROUP BY
+                hour
+            ORDER BY
+                hour;
+            """
+            params = [account, date]
+
+            cursor.execute(sql, params)
+            result = cursor.fetchall()
+            print("Original result:", result)
+            #return Data(code="200", msg="压力数据获取成功", result=result)
+            # 补充缺失的小时数据，假设压力为0
+            hourly_data = {hour: 0 for hour in range(24)}
+            for row in result:
+                hourly_data[row[0]] = row[1]
+
+            # 将结果按小时顺序输出
+            final_result = [{"hour": hour, "avg_pressure": hourly_data[hour]} for hour in range(24)]
+
+
+
+        return Data(code="200", msg="压力数据获取成功", result=final_result)
+    except pymysql.MySQLError as e:
+        return Data(code="500", msg=f"数据库异常: {str(e)}", result=None)
+    finally:
+        connection.close()
+    
+
 
 
 #login_with_wechat("12345")

@@ -22,6 +22,9 @@ from openai import OpenAI
 from dotenv import load_dotenv#AI配置
 from flasgger import Swagger
 from utils import Data  # Assuming you have a similar toast utility
+import requests
+import json 
+import re#智能体调用
 #http://113.45.206.40:5000/apidocs/  接口查看文档 服务器ip113.45.206.40
 # ====================
 # 应用初始化配置
@@ -662,7 +665,6 @@ def wechat_login():
     result = database.login_with_wechat(wechat_openid)
     return jsonify(result.__dict__), result.code
 
-
 #注册用户
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -741,6 +743,30 @@ class UserNotFoundError(Exception):
 #用户注销
 @app.route('/user_delete', methods=['GET'])
 def delete_user_data():
+    """
+用户注销账户
+---
+tags:
+  - 用户管理
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      properties:
+        account:
+          type: string
+          description: 用户账号标识
+responses:
+  200:
+    description: 用户数据删除成功
+  400:
+    description: 请求参数缺失（账号不能为空）
+  500:
+    description: 服务器内部错误
+"""
+
     data = request.get_json()
     account = data.get('account')
     
@@ -754,6 +780,30 @@ def delete_user_data():
 #压力记录删除
 @app.route('/pressure_delete', methods=['GET'])
 def delete_pressure_data():
+    """
+删除用户压力记录
+---
+tags:
+  - 压力数据
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      properties:
+        account:
+          type: string
+          description: 用户账号标识
+responses:
+  200:
+    description: 压力记录删除成功
+  400:
+    description: 请求参数缺失（账号不能为空）
+  500:
+    description: 服务器内部错误
+"""
+
     data = request.get_json()
     account = data.get('account')
     
@@ -767,6 +817,30 @@ def delete_pressure_data():
 #蓝牙记录删除
 @app.route('/device/delete', methods=['GET'])
 def delete_device_connection_form():
+    """
+删除用户蓝牙设备连接记录
+---
+tags:
+  - 设备管理
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      properties:
+        account:
+          type: string
+          description: 用户账号标识
+responses:
+  200:
+    description: 蓝牙设备连接记录删除成功
+  400:
+    description: 请求参数缺失（账号不能为空）
+  500:
+    description: 服务器内部错误
+"""
+
     data = request.get_json()
     account = data.get('account')
     
@@ -846,7 +920,7 @@ def connect_device():
 
 
 
-# 存储压力数据接口
+# 存储压力数据接口 压力1-5
 @app.route('/store_pressure', methods=['POST'])
 def store_pressure():
     """
@@ -890,6 +964,94 @@ def store_pressure():
 
     result = database.store_pressure_data(account, pressure_value, device_id)
        
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code
+#测量基准数值
+@app.route('/baseline_phy_signal/store',methods=['POST'])
+def store_baseline_phy_signal():
+    """
+测量并存储用户基准生理信号数值
+---
+tags:
+  - 生理信号
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      properties:
+        account:
+          type: string
+          description: 用户账号标识
+        Heart_rate:
+          type: number
+          description: 心率（单位：次/分钟）
+        Blood_pressure:
+          type: string
+          description: 血压（格式示例：120/80）
+        skin_conductance:
+          type: number
+          description: 皮肤电导值（单位：μS）
+        skin_temperature:
+          type: number
+          description: 皮肤温度（单位：摄氏度）
+responses:
+  200:
+    description: 成功存储用户基准生理信号数据
+  400:
+    description: 请求参数缺失（账号或测量值为空）
+  500:
+    description: 服务器内部错误
+"""
+
+    data = request.get_json()
+    account = data.get('account')
+    Heart_rate =data.get('Heart_rate')
+    Blood_pressure=data.get('Blood_pressure')
+    skin_conductance=data.get('skin_conductance')
+    skin_temperature=data.get('skin_temperature')
+
+    if not account or Heart_rate is None or Blood_pressure is None or skin_conductance is None or skin_temperature is None:
+        return jsonify(Data(code="400", msg="账号和测量数值不能为空").__dict__), 400
+
+    result = database.record_baseline_physiological_signals(account,Heart_rate,Blood_pressure,skin_conductance ,skin_temperature)
+       
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code
+# 获取基准数值
+@app.route('/baseline_phy_signal/get', methods=['GET'])
+def get_baseline_phy_signal():
+    """
+获取用户基准生理信号数值
+---
+tags:
+  - 生理信号
+parameters:
+  - in: query
+    name: account
+    required: true
+    schema:
+      type: string
+    description: 用户账号标识，用于获取其基准生理信号数据
+responses:
+  200:
+    description: 成功返回用户基准生理信号数据
+  400:
+    description: 请求参数缺失（账号不能为空）
+  500:
+    description: 服务器内部错误
+"""
+
+    args = request.args
+    print(args)  # 打印查询参数，查看是否正确传递
+
+    account = args.get('account')
+  
+    if  account is None:
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
+
+    result = database.get_baseline_physiological_signals(account)
     status_code = 200 if result.code == "200" else 500
     return jsonify(result.__dict__), status_code
 
@@ -983,6 +1145,9 @@ def get_pressure():
     status_code = 200 if result.code == "200" else 500
     return jsonify(result.__dict__), status_code
 #AI聊天
+# 智能体的个人令牌(一个月过期2025/5/19)，botid
+bot_id = '7494550975282839586'
+api_key = 'pat_LPhpdhwRSQWxAirw1qSBScRQykfTIkWYk9XEnSPwI9OkBBAGD7zVQZVbAMbvwpFa'
 # 加载环境变量
 load_dotenv('D:\Psystem\Databased\DataBase\music\CalmwaveAPI.env')#env中存放了API
 SILICONFLOW_BASE_URL = "https://api.siliconflow.cn/v1"  # 替换为硅基流动的实际地址
@@ -992,14 +1157,70 @@ client = OpenAI(api_key=os.getenv("SILICONFLOW_API_KEY"),
                 )
 # 使用字典存储不同用户的对话历史
 user_sessions = {}
+#调用智能体 发起对话
+base_url = 'https://api.coze.cn/v3/chat'
 
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    'Content-Type': 'application/json'
+}
+
+def call_coze_bot(question_text):
+    data = {
+        "bot_id": bot_id,
+        "user_id": "jiangwp",
+        "stream": False,
+        "auto_save_history": True,
+        "additional_messages": [
+            {
+                "role": "user",
+                "content": question_text,
+                "content_type": "text"
+            }
+        ]
+    }
+
+    # 发送请求以启动对话
+    response = requests.post(base_url, headers=headers, data=json.dumps(data))
+    if response.status_code != 200:
+        raise Exception(f"启动对话失败: {response.text}")
+
+    response_data = response.json()
+    chat_id = response_data['data']['id']
+    conversation_id = response_data['data']['conversation_id']
+
+    # 轮询直到生成完成
+    retrieve_url = f"{base_url}/retrieve?conversation_id={conversation_id}&chat_id={chat_id}"
+    while True:
+        status_response = requests.get(retrieve_url, headers=headers)
+        if status_response.status_code != 200:
+            raise Exception(f"查询状态失败: {status_response.text}")
+
+        status_data = status_response.json()
+        if status_data['data']['status'] == 'completed':
+            break
+        time.sleep(1)
+
+    # 获取最终 message 列表
+    msg_url = f"{base_url}/message/list?chat_id={chat_id}&conversation_id={conversation_id}"
+    msg_response = requests.get(msg_url, headers=headers)
+    if msg_response.status_code != 200:
+        raise Exception(f"获取消息失败: {msg_response.text}")
+
+    # ✅ 只返回最终的 data 字段（即智能体的全部回答）
+    return msg_response.json()['data']
+
+
+# 解析智能体的输出
+def parse_bot_output(output):
+    return json.loads(output)
 @app.route('/api/ask-ai', methods=['POST'])
 def ask_ai():
     """
-    压力疏导AI对话
+    AI调整音乐偏好
     ---
     tags:
-      - AI聊天
+      - AI分析
     parameters:
       - in: body
         name: body
@@ -1032,6 +1253,7 @@ def ask_ai():
         # 添加用户问题到历史
         user_sessions[account].append({"role": "user", "content": user_question})
         print("已经调用AI接口")
+        """
 
         # 调用API（始终发送完整历史）
         response = client.chat.completions.create(
@@ -1044,16 +1266,219 @@ def ask_ai():
         # 添加AI回复到历史
         ai_response = response.choices[0].message.content
         user_sessions[account].append({"role": "assistant", "content": ai_response})
+        """
+        print("成功打开智能体")
+        
+        
+        
+        #对用户回答分析
+        prompts_response=call_coze_bot(user_question)
+        # 打印调试信息，查看 prompts_response
+        print(f"Prompts response: {prompts_response}")  # 输出实际返回的内容
+        # 遍历查找 type 为 answer 的消息
+        for message in prompts_response:
+          if message.get("type") == "answer":
+            raw_content = message.get("content", "")
+            # 提取```json```代码块中的 JSON 部分
+            match = re.search(r"```json\s*(\{[\s\S]*?\})\s*```", raw_content)
+            if match:
+              json_str = match.group(1)
+              parsed_json = json.loads(json_str)
+              #print(parsed_json)
+            else:
+              print("未找到有效 JSON 数据")
+            break
+
+        # 提取 genre, mood, tempo , additional_requirements信息
+        genre = parsed_json.get('genre')
+        mood = parsed_json.get('mood')
+        tempo = parsed_json.get('tempo')
+        additional_requirements=parsed_json.get('additional_requirements')#可能为空
+
+        prompts_result=database.store_personal_prompts(account,genre, mood, tempo , additional_requirements)
+        #没商量好怎么处理
 
         result = {
-            "answer": ai_response,
-            "history": user_sessions[account][1:]  # 不包括 system 的首条
-        }
+                    "answer": prompts_result,#ai_response,
+                   "history": user_sessions[account][1:]  # 不包括 system 的首条
+         }
+
         return jsonify(Data(code="200", msg="AI回复成功", result=result).__dict__)
 
     except Exception as e:
         return jsonify(Data(code="500", msg=f"服务异常: {str(e)}", result=None).__dict__), 500
-            
+#获取用户的个性化prompts
+@app.route('/presonal_prompts/get', methods=['GET'])   
+def get_presonal_prompts():
+    """
+获取用户个性化Prompts
+---
+tags:
+  - 音乐推荐
+parameters:
+  - in: query
+    name: account
+    required: true
+    schema:
+      type: string
+    description: 用户账号标识，用于获取个性化推荐内容
+responses:
+  200:
+    description: 成功返回用户个性化Prompts
+  400:
+    description: 请求参数缺失（账号不能为空）
+  500:
+    description: 服务器内部错误
+"""
+
+    args = request.args
+
+    account = args.get('account')
+  
+    if not account :
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
+
+    result = database.get_personal_prompts(account)
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code
+#生成音乐的prompts
+@app.route('/music/get_prompts', methods=['GET'])  
+def get_prompts():
+    """
+获取音乐生成提示词
+---
+tags:
+  - 音乐推荐
+parameters:
+  - in: query
+    name: account
+    required: true
+    schema:
+      type: string
+    description: 用户账号，用于标识请求用户
+  - in: query
+    name: pressure_value
+    required: true
+    schema:
+      type: string
+    description: 用户当前的压力值，用于生成匹配的音乐提示词
+responses:
+  200:
+    description: 返回生成音乐的prompts信息
+  400:
+    description: 请求参数错误（缺少账号或压力值）
+  500:
+    description: 服务器处理异常
+"""
+
+    args = request.args
+
+    account = args.get('account')
+    pressure_value = args.get('pressure_value')
+  
+    if not account or pressure_value is None :
+        return jsonify(Data(code="400", msg="账号和压力值不能为空").__dict__), 400
+
+    result = database.get_prompt(account,pressure_value)
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code
+#意见反馈表提交
+@app.route('/store_feedback_data', methods=['POST'])  
+def store_feedback_data():
+    """
+提交意见反馈
+---
+tags:
+  - 用户反馈
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      properties:
+        selectedType:
+          type: string
+          description: 反馈类型（如功能建议、BUG反馈等）
+        feedbackContent:
+          type: string
+          description: 反馈的具体内容
+        contact:
+          type: string
+          description: 用户联系方式（邮箱/电话）
+        account:
+          type: string
+          description: 用户账号标识
+        images:
+          type: array
+          items:
+            type: string
+          description: 附件图片（Base64编码或URL数组）
+responses:
+  200:
+    description: 意见反馈提交成功
+  400:
+    description: 请求参数缺失
+  500:
+    description: 服务器错误
+"""
+  
+    data = request.get_json()
+    selectedType =data.get('selectedType')
+    feedbackContent=data.get('feedbackContent')
+    contact=data.get('contact')
+    account =data.get('account')
+    images=data.get('images')
+    if not account or selectedType is None or feedbackContent is None or contact is None :
+        return jsonify(Data(code="400", msg="账号和提交值不能为空").__dict__), 400
+
+    result = database.store_feedback_data(selectedType,feedbackContent,contact,account,images)
+       
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code
+#报表数据获取
+@app.route('/get_day_pressure', methods=['GET'])  
+def get_day_pressure():
+    """
+获取用户某日压力数据
+---
+tags:
+  - 数据报表
+parameters:
+  - in: query
+    name: account
+    required: true
+    schema:
+      type: string
+    description: 用户账号标识
+  - in: query
+    name: date
+    required: true
+    schema:
+      type: string
+    description: 查询的日期（格式：YYYY-MM-DD）
+responses:
+  200:
+    description: 成功返回压力数据
+  400:
+    description: 请求参数缺失（账号或日期为空）
+  500:
+    description: 服务器内部错误
+"""
+
+    args = request.args
+
+    account = args.get('account')
+    date=args.get('date')
+  
+    if not account or date is None :
+        return jsonify(Data(code="400", msg="账号与日期不能为空").__dict__), 400
+
+    result = database.get_day_pressure(account,date)
+    status_code = 200 if result.code == "200" else 500
+    return jsonify(result.__dict__), status_code
+
+
 
 
 # ====================
