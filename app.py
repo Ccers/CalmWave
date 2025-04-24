@@ -25,7 +25,9 @@ from utils import Data  # Assuming you have a similar toast utility
 import requests
 import json 
 import re#智能体调用
-#http://113.45.206.40:5000/apidocs/  接口查看文档 服务器ip113.45.206.40
+import uuid
+import load
+#http://172.29.235.189:5000/apidocs/  接口查看文档 服务器ip113.45.206.40
 # ====================
 # 应用初始化配置
 # ====================
@@ -516,12 +518,12 @@ def get_user():
 
     account = request.args.get('account')
     if not account:
-        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 200
     
     user_data = database.get_user(account)
     
     if not user_data:
-      return (Data(code="404", msg="用户不存在").__dict__), 400
+      return (Data(code="404", msg="用户不存在").__dict__), 200
     return jsonify(user_data.__dict__), user_data.code
 #账号密码登录
 @app.route('/login', methods=['POST'])
@@ -595,7 +597,7 @@ def login():
     password = data.get('password')
 
     if not account or not password:
-        return jsonify(Data(code="400", msg="账号和密码不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="账号和密码不能为空").__dict__), 200
 
     result = database.login_with_account_password(account, password)
     return jsonify(result.__dict__), result.code
@@ -660,7 +662,7 @@ def wechat_login():
     wechat_openid = data.get('wechat_openid')
 
     if not wechat_openid:
-        return jsonify(Data(code="400", msg="参数不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="参数不能为空").__dict__), 200
 
     result = database.login_with_wechat(wechat_openid)
     return jsonify(result.__dict__), result.code
@@ -730,7 +732,7 @@ def register_user():
     data = request.get_json()
     print(data["account"]+"resiger")
     if not all(k in data for k in ("username", "account", "phone","password")):
-        return jsonify(Data(code="400", msg="参数不完整").__dict__), 400
+        return jsonify(Data(code="400", msg="参数不完整").__dict__), 200
 
     result = database.add_user(data["username"], data["account"], data["phone"], data["password"])
     status_code = 200 if result.code == "200" else 500
@@ -771,7 +773,7 @@ responses:
     account = data.get('account')
     
     if  account is None:
-        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 200
 
     result = database.delete_user(account)
        
@@ -784,7 +786,7 @@ def delete_pressure_data():
 删除用户压力记录
 ---
 tags:
-  - 压力数据
+  - 用户压力数据管理
 parameters:
   - in: body
     name: body
@@ -808,49 +810,54 @@ responses:
     account = data.get('account')
     
     if  account  is None:
-        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 200
 
     result = database.delete_pressure_data_form(account)
        
     status_code = 200 if result.code == "200" else 500
     return jsonify(result.__dict__), status_code 
 #蓝牙记录删除
-@app.route('/device/delete', methods=['GET'])
+@app.route('/device/delete', methods=['POST'])
 def delete_device_connection_form():
     """
-删除用户蓝牙设备连接记录
----
-tags:
-  - 设备管理
-parameters:
-  - in: body
-    name: body
-    required: true
-    schema:
-      type: object
-      properties:
-        account:
-          type: string
-          description: 用户账号标识
-responses:
-  200:
-    description: 蓝牙设备连接记录删除成功
-  400:
-    description: 请求参数缺失（账号不能为空）
-  500:
-    description: 服务器内部错误
-"""
+    删除用户蓝牙设备连接记录
+    ---
+    tags:
+      - 用户设备管理
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              account:
+                type: string
+                description: 用户账号标识
+    responses:
+      200:
+        description: 蓝牙设备连接记录删除成功
+      400:
+        description: 请求参数缺失（账号不能为空）
+      500:
+        description: 服务器内部错误
+    """
+    try:
+        if not request.is_json:
+            return jsonify(Data(code="400", msg="请求体必须是 JSON 格式").__dict__), 200
 
-    data = request.get_json()
-    account = data.get('account')
-    
-    if  account  is None:
-        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
+        data = request.get_json()
+        account = data.get('account')
 
-    result = database.delete_device_connection_form(account)
-       
-    status_code = 200 if result.code == "200" else 500
-    return jsonify(result.__dict__), status_code 
+        if not account:
+            return jsonify(Data(code="400", msg="账号不能为空").__dict__), 200
+
+        result = database.delete_device_connection_form(account)
+        status_code = 200 if result.code == "200" else 500
+        return jsonify(result.__dict__), status_code
+
+    except Exception as e:
+        return jsonify(Data(code="500", msg=f"服务器内部错误: {str(e)}").__dict__), 500
 # 记录设备连接历史
 @app.route('/device/connect', methods=['POST'])
 def connect_device():
@@ -908,7 +915,7 @@ def connect_device():
     """
     data = request.get_json()  # 更安全的获取方式
     if not data or not all(k in data for k in ("account", "device_id", "status", "device_name", "mac_address")):
-        return jsonify(Data(code="400", msg="填入数值不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="填入数值不能为空").__dict__), 200
     
     # 不再需要try-catch，交由Flask处理
     result = database.record_device_connection(
@@ -960,7 +967,7 @@ def store_pressure():
 
 
     if not account or pressure_value is None:
-        return jsonify(Data(code="400", msg="账号和压力值不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="账号和压力值不能为空").__dict__), 200
 
     result = database.store_pressure_data(account, pressure_value, device_id)
        
@@ -1013,7 +1020,7 @@ responses:
     skin_temperature=data.get('skin_temperature')
 
     if not account or Heart_rate is None or Blood_pressure is None or skin_conductance is None or skin_temperature is None:
-        return jsonify(Data(code="400", msg="账号和测量数值不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="账号和测量数值不能为空").__dict__), 200
 
     result = database.record_baseline_physiological_signals(account,Heart_rate,Blood_pressure,skin_conductance ,skin_temperature)
        
@@ -1049,7 +1056,7 @@ responses:
     account = args.get('account')
   
     if  account is None:
-        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 200
 
     result = database.get_baseline_physiological_signals(account)
     status_code = 200 if result.code == "200" else 500
@@ -1139,7 +1146,7 @@ def get_pressure():
 
 
     if not account or not date:
-        return jsonify(Data(code="400", msg="账号和日期不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="账号和日期不能为空").__dict__), 200
 
     result = database.get_pressure_data(account, date)
     status_code = 200 if result.code == "200" else 500
@@ -1164,6 +1171,215 @@ headers = {
     "Authorization": f"Bearer {api_key}",
     'Content-Type': 'application/json'
 }
+
+"""
+        # 调用API（始终发送完整历史）
+        response = client.chat.completions.create(
+            model="deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+            messages=user_sessions[account][-6:],  # 限制最近6条 
+            temperature=0.7,
+            max_tokens=500
+        )
+
+        # 添加AI回复到历史
+        ai_response = response.choices[0].message.content
+        user_sessions[account].append({"role": "assistant", "content": ai_response})
+
+        
+        """
+#更新头像图片
+#request.get_json() 无法获取文件！
+#你用的是 request.get_json()，它只适用于 application/json 类型的请求。头像上传是通过 multipart/form-data 提交的，所以应该使用 request.form 和 request.files。
+#只允许上传：.png .jpg .jpeg
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+#上传头像
+@app.route('/upload-avatars', methods=['POST'])
+def upload_avatars():
+    """
+上传用户头像文件（支持批量，返回 OSS 图片链接数组）
+---
+tags:
+  - 用户管理
+consumes:
+  - multipart/form-data
+parameters:
+  - in: formData
+    name: avatar
+    required: true
+    type: array
+    items:
+      type: file
+    description: 头像图片文件数组，仅支持 png/jpg/jpeg 格式
+responses:
+  200:
+    description: 上传成功，返回头像图片的公开 URL 数组
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "200"
+            msg:
+              type: string
+              example: 所有用户头像上传成功
+            result:
+              type: array
+              items:
+                type: string
+                example: https://your-bucket.oss-cn-region.aliyuncs.com/avatars/xxx.jpg
+  400:
+    description: 请求参数错误（如缺少图片或格式不支持）
+  500:
+    description: 服务器内部错误
+    """
+    try:
+        files = request.files.getlist('avatar')
+        if not files or len(files) == 0:
+            return jsonify(Data(code="400", msg="未找到图片", result=None).__dict__), 200
+
+        urls = []
+        for file in files:
+            if not allowed_file(file.filename):
+                return jsonify(Data(code="400", msg="仅支持 png/jpg/jpeg 格式图片", result=None).__dict__), 200
+            
+            ext = file.filename.rsplit('.', 1)[-1]
+            filename = f"avatars/{uuid.uuid4()}.{ext}"
+            image_url = load.upload_image_to_oss(file, filename)
+            urls.append(image_url)
+
+        return jsonify(Data(code="200", msg="所有用户头像上传成功", result=urls).__dict__), 200
+    
+    except Exception as e:
+        return jsonify(Data(code="500", msg=f"服务异常: {str(e)}", result=None).__dict__), 500
+
+#存储头像
+@app.route('/store_avatar', methods=['POST'])
+def store_avatar():
+    """
+存储用户头像与昵称
+---
+tags:
+  - 用户管理
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      properties:
+        username:
+          type: string
+          description: 用户昵称
+        account:
+          type: string
+          description: 用户账号标识
+        avatar_url:
+          type: string
+          description: 用户头像图片的 URL 地址
+responses:
+  200:
+    description: 用户头像与昵称保存成功
+  400:
+    description: 请求参数缺失（头像不能为空）
+  500:
+    description: 服务器内部错误
+"""
+    try:
+        data = request.get_json()
+        username = data.get("username")
+        account = data.get("account")  # 默认用户
+        avatar_url=data.get("avatar_url")
+        
+        if not avatar_url:
+            return jsonify(Data(code="400", msg="图片不能为空").__dict__),200
+        result=database.update_avatar(account,avatar_url,username)
+
+        return jsonify(Data(code="200", msg="头像和昵称存储成功").__dict__),200
+
+    except Exception as e:
+        return jsonify(Data(code="500", msg=f"服务异常: {str(e)}").__dict__), 500
+#获取头像
+@app.route('/get_avatar', methods=['GET'])
+def get_avatar():
+  """
+获取用户头像和昵称
+---
+tags:
+  - 用户管理
+parameters:
+  - in: query
+    name: account
+    required: true
+    schema:
+      type: string
+    description: 用户账号标识，用于获取头像
+responses:
+  200:
+    description: 成功返回用户头像和昵称
+  400:
+    description: 请求参数缺失（账号不能为空）
+  500:
+    description: 服务器内部错误"""
+  
+  try:
+        args = request.args
+       
+        account = args.get("account")  # 默认用户
+
+        if not account:
+            return jsonify(Data(code="400", msg="账号不能为空").__dict__),200
+        result=database.get_avatar(account)
+
+        status_code = 200 if result.code == "200" else 500
+        return jsonify(result.__dict__), status_code
+  except Exception as e:
+       return jsonify(Data(code="500", msg=f"服务异常: {str(e)}").__dict__), 500
+
+
+def extract_json_from_nested_content(content):
+    try:
+        # 先解析第一层 JSON（实际是一个 JSON 字符串）
+        outer = json.loads(content)
+        output = outer.get("output", "")
+        
+        # 检查是否包含 Markdown 格式的 JSON
+        json_match = re.search(r'```json\s*(\{.*?\})\s*```', output, re.DOTALL)
+        if json_match:
+            return json.loads(json_match.group(1))  # 提取并解析 JSON
+        
+        # 尝试解析无 markdown 的 JSON（如果没有 Markdown 格式的包装）
+        brace_match = re.search(r'\{.*\}', output, re.DOTALL)
+        if brace_match:
+            return json.loads(brace_match.group())
+
+    except Exception as e:
+        print(f"[DEBUG] extract_json_from_nested_content 错误: {str(e)}")
+
+    return None
+def extract_analysis_result_from_messages(messages):
+    for msg in messages:
+        role = msg.get("role")
+        content = msg.get("content", "")
+
+        if role != "assistant":
+            continue
+
+        try:
+            # 尝试解析嵌套 JSON 格式
+            outer = json.loads(content)
+            if isinstance(outer, dict) and "output" in outer:
+                match = re.search(r'\{.*?\}', outer["output"], re.DOTALL)
+                if match:
+                    return json.loads(match.group())
+        except:
+            pass
+    return None
 
 def call_coze_bot(question_text):
     data = {
@@ -1207,105 +1423,136 @@ def call_coze_bot(question_text):
     if msg_response.status_code != 200:
         raise Exception(f"获取消息失败: {msg_response.text}")
 
-    # ✅ 只返回最终的 data 字段（即智能体的全部回答）
+    # 只返回最终的 data 字段（即智能体的全部回答）
     return msg_response.json()['data']
-
-
 # 解析智能体的输出
 def parse_bot_output(output):
     return json.loads(output)
 @app.route('/api/ask-ai', methods=['POST'])
 def ask_ai():
     """
-    AI调整音乐偏好
-    ---
-    tags:
-      - AI分析
-    parameters:
-      - in: body
-        name: body
-        required: true
+智能体解析用户提问生成音乐推荐 Prompt
+---
+tags:
+  - 音乐推荐
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      properties:
+        question:
+          type: string
+          description: 用户提问或倾诉内容，将由智能体解析
+        account:
+          type: string
+          description: 用户账号标识，默认 default
+responses:
+  200:
+    description: 成功生成音乐推荐 prompt，并返回对话历史
+    content:
+      application/json:
         schema:
           type: object
           properties:
-            question:
+            code:
               type: string
-            account:  # 新增用户标识
+              example: "200"
+            msg:
               type: string
-    responses:
-      200:
-        description: 带对话历史的AI回复
-    """
+              example: AI分析成功
+            result:
+              type: object
+              properties:
+                answer:
+                  type: string
+                  example: 猜你喜欢：lofi calm medium 加点节奏感
+                history:
+                  type: array
+                  description: 用户与 AI 的对话历史（不包含 system 开头）
+                  items:
+                    type: object
+                    properties:
+                      role:
+                        type: string
+                        example: user / assistant
+                      content:
+                        type: string
+  400:
+    description: 参数错误（问题为空）
+  500:
+    description: 服务异常
+"""
+
+  
     try:
         data = request.get_json()
         user_question = data.get("question", "")
         account = data.get("account", "default")  # 默认用户
         
         if not user_question:
-            return jsonify(Data(code="400", msg="问题不能为空").__dict__), 400
+            return jsonify(Data(code="400", msg="问题不能为空").__dict__), 200
+        
 
         # 获取或初始化该用户的对话历史
         if account not in user_sessions:
             user_sessions[account] = [
-                {"role": "system", "content": "你是心理疏导助手小荔，用温暖、关怀的语气简洁地与用户交流，帮助缓解压力，用户不希望阅读过多的字。"}
+                {"role": "system", "content": "你是根据用户聊天记录"}
             ]
 
         # 添加用户问题到历史
         user_sessions[account].append({"role": "user", "content": user_question})
-        print("已经调用AI接口")
-        """
+        
+        
 
-        # 调用API（始终发送完整历史）
-        response = client.chat.completions.create(
-            model="deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
-            messages=user_sessions[account][-6:],  # 限制最近6条 
-            temperature=0.7,
-            max_tokens=500
-        )
+       
+        
+        # 调用 Coze Bot 并打印完整响应
+        prompts_response = call_coze_bot(user_question)
+        #print("[DEBUG] prompts_response 完整结构:")
+        print(json.dumps(prompts_response, indent=2, ensure_ascii=False))
 
-        # 添加AI回复到历史
-        ai_response = response.choices[0].message.content
-        user_sessions[account].append({"role": "assistant", "content": ai_response})
-        """
-        print("成功打开智能体")
-        
-        
-        
-        #对用户回答分析
-        prompts_response=call_coze_bot(user_question)
-        # 打印调试信息，查看 prompts_response
-        print(f"Prompts response: {prompts_response}")  # 输出实际返回的内容
-        # 遍历查找 type 为 answer 的消息
+        parsed_json = None
         for message in prompts_response:
-          if message.get("type") == "answer":
-            raw_content = message.get("content", "")
-            # 提取```json```代码块中的 JSON 部分
-            match = re.search(r"```json\s*(\{[\s\S]*?\})\s*```", raw_content)
-            if match:
-              json_str = match.group(1)
-              parsed_json = json.loads(json_str)
-              #print(parsed_json)
-            else:
-              print("未找到有效 JSON 数据")
-            break
+            content = message.get("content", "")
+            if content:
+                parsed_json = extract_json_from_nested_content(content)
+                if parsed_json:
+                    break
 
-        # 提取 genre, mood, tempo , additional_requirements信息
-        genre = parsed_json.get('genre')
-        mood = parsed_json.get('mood')
-        tempo = parsed_json.get('tempo')
-        additional_requirements=parsed_json.get('additional_requirements')#可能为空
+        #print("[DEBUG] parsed_json 最终结果:")
+        #print(parsed_json)
 
-        prompts_result=database.store_personal_prompts(account,genre, mood, tempo , additional_requirements)
-        #没商量好怎么处理
+        if parsed_json is None:
+            return jsonify({"code": "500", "msg": "未能解析有效的推荐数据"}), 200
+
+        # 提取数据（提供默认值）
+        genre = parsed_json.get('genre', '')
+        mood = parsed_json.get('mood', '')
+        tempo = parsed_json.get('tempo', '')
+        additional_requirements = parsed_json.get('additional_requirements', '')
+
+
+        like = f"{genre} {mood} {tempo} {additional_requirements}".strip()
+        """
+        if like is None:
+            print("[DEBUG] parsed_json 最终结果:")
+            print(parsed_json)
+        """
+
+        # 存储推荐信息（假设 database 方法已定义）
+        prompts_result = database.store_personal_prompts(account, genre, mood, tempo, additional_requirements)
 
         result = {
-                    "answer": prompts_result,#ai_response,
-                   "history": user_sessions[account][1:]  # 不包括 system 的首条
-         }
+            "answer": f"猜你喜欢：{like}"
+            
+        }
 
-        return jsonify(Data(code="200", msg="AI回复成功", result=result).__dict__)
+        return jsonify(Data(code="200", msg="AI分析成功", result=result).__dict__)
 
     except Exception as e:
+        print(f"[ERROR] 服务异常: {str(e)}")
         return jsonify(Data(code="500", msg=f"服务异常: {str(e)}", result=None).__dict__), 500
 #获取用户的个性化prompts
 @app.route('/presonal_prompts/get', methods=['GET'])   
@@ -1336,52 +1583,92 @@ responses:
     account = args.get('account')
   
     if not account :
-        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 200
 
     result = database.get_personal_prompts(account)
     status_code = 200 if result.code == "200" else 500
     return jsonify(result.__dict__), status_code
-#生成音乐的prompts
-@app.route('/music/get_prompts', methods=['GET'])  
-def get_prompts():
+
+
+#间隔生成音乐 间隔三分钟，要改去database文件改
+@app.route('/music/check_music_create', methods=['GET'])  
+def check_music_create():
     """
-获取音乐生成提示词
+检查并生成音乐（每3分钟生成一次）
 ---
 tags:
-  - 音乐推荐
+  - 音乐生成
 parameters:
   - in: query
     name: account
     required: true
     schema:
       type: string
-    description: 用户账号，用于标识请求用户
-  - in: query
-    name: pressure_value
-    required: true
-    schema:
-      type: string
-    description: 用户当前的压力值，用于生成匹配的音乐提示词
+    description: 用户账号标识，用于判断是否满足生成间隔条件（默认间隔为3分钟）
 responses:
   200:
-    description: 返回生成音乐的prompts信息
+    description: 成功生成或返回已有音乐
   400:
-    description: 请求参数错误（缺少账号或压力值）
+    description: 请求参数缺失（账号不能为空）
   500:
-    description: 服务器处理异常
+    description: 服务器内部错误
+notes:
+  如果需要修改生成间隔，请到 database 文件中修改相关逻辑。
 """
+
 
     args = request.args
 
     account = args.get('account')
-    pressure_value = args.get('pressure_value')
-  
-    if not account or pressure_value is None :
-        return jsonify(Data(code="400", msg="账号和压力值不能为空").__dict__), 400
-
-    result = database.get_prompt(account,pressure_value)
+    if not account :
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 200
+    result=database.create_music(account)
     status_code = 200 if result.code == "200" else 500
     return jsonify(result.__dict__), status_code
+
+
+
+#获取音乐  音乐获取有返回url无则返回none
+@app.route('/music/get_music', methods=['GET'])  
+def get_music():
+    """
+    获取用户生成的音乐资源
+    ---
+    tags:
+      - 音乐生成
+    parameters:
+      - in: query
+        name: account
+        required: true
+        schema:
+          type: string
+        description: 用户账号标识，用于查询已生成的音乐文件
+    responses:
+      200:
+        description: 获取成功，返回音乐文件的 URL
+      404:
+        description: 未找到用户的音乐资源（可能尚未生成）
+      400:
+        description: 请求参数缺失（账号不能为空）
+      500:
+        description: 服务器内部错误
+    """
+    args = request.args
+    account = args.get('account')
+
+    if not account:
+        return jsonify(Data(code="400", msg="账号不能为空").__dict__), 200
+
+    result = database.get_music(account)
+    if result.code == "200":
+        status_code = 200  
+    elif result.code == "404":
+        status_code = 404
+    else:
+        status_code = 500    
+
+    return jsonify(result.__dict__), status_code
+
 #意见反馈表提交
 @app.route('/store_feedback_data', methods=['POST'])  
 def store_feedback_data():
@@ -1430,7 +1717,7 @@ responses:
     account =data.get('account')
     images=data.get('images')
     if not account or selectedType is None or feedbackContent is None or contact is None :
-        return jsonify(Data(code="400", msg="账号和提交值不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="账号和提交值不能为空").__dict__), 200
 
     result = database.store_feedback_data(selectedType,feedbackContent,contact,account,images)
        
@@ -1443,7 +1730,7 @@ def get_day_pressure():
 获取用户某日压力数据
 ---
 tags:
-  - 数据报表
+  - 用户压力数据管理
 parameters:
   - in: query
     name: account
@@ -1472,7 +1759,7 @@ responses:
     date=args.get('date')
   
     if not account or date is None :
-        return jsonify(Data(code="400", msg="账号与日期不能为空").__dict__), 400
+        return jsonify(Data(code="400", msg="账号与日期不能为空").__dict__), 200
 
     result = database.get_day_pressure(account,date)
     status_code = 200 if result.code == "200" else 500

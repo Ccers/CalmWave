@@ -6,6 +6,12 @@ from werkzeug.security import check_password_hash
 from utils import Data #返回值结构体
 import json
 import random
+import requests
+from typing import Union
+import time
+from combine import generate_music
+import logging
+
 class UserNotFoundError(HTTPException):  # 改为继承HTTPException
     code = 404  # 直接绑定状态码
     description = "User not found"
@@ -30,7 +36,7 @@ DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
     'password': '123456',
-    'database': 'CalmWave_Databases',
+    'database': 'maku_boot',
     'charset': 'utf8mb4'
 }
 def get_db_connection():
@@ -233,6 +239,13 @@ def delete_baseline_physiological_signals(account: str, cursor)->bool:
         return True
     except pymysql.MySQLError:
         return False
+def delete_music_data(account: str, cursor)->bool:
+    """删除用户music_data"""
+    try:
+        cursor.execute("DELETE FROM music_data WHERE account = %s", (account,))
+        return True
+    except pymysql.MySQLError:
+        return False
 def delete_personal_prompts(account: str, cursor)->bool:
     """删除用户个性化prompts"""
     try:
@@ -326,6 +339,7 @@ def delete_user(account: str) -> Data:
             device_deleted = delete_device_connection_history(account, cursor)
             baseline_phy_signals=delete_baseline_physiological_signals(account,cursor)
             personal_prompts_deleted= delete_personal_prompts(account,cursor)
+            music_data_deleted= delete_music_data(account,cursor)
             
             # 删除用户主记录
             cursor.execute("DELETE FROM user WHERE account = %s", (account,))
@@ -343,6 +357,8 @@ def delete_user(account: str) -> Data:
                     msg += " (基准数值数据删除失败)"
                 if not  personal_prompts_deleted:
                     msg += "(个性化prompts删除失败)"
+                if not music_data_deleted:
+                    msg += "(用户音乐列表删除失败)"
                 return Data(code="200", msg=msg, result=None)
             
             connection.rollback()
@@ -595,12 +611,32 @@ def get_temperature(pressure_level:str, cursor)->float:
         return temperature
     except pymysql.MySQLError:
         return 0.0
-#查询基准prompt
-def get_prompt(account:str,pressure_value:str)->Data:
+
+#得到音乐 
+Generate_interval=300 #3分钟生成一次
+def create_music(account:str)->Data:
     connection =get_db_connection()
     try:
         with connection.cursor() as cursor:
-            # 检查用户是否存在（这里会抛出UserNotFoundError）
+                sql="""SELECT *
+                    FROM music_data
+                    WHERE account = %s
+                    
+                    AND TIMESTAMPDIFF(SECOND, create_time, NOW()) <= %s;"""
+                cursor.execute(sql,(account, Generate_interval))
+                music_ex=cursor.fetchall()
+                if  music_ex:#说明有歌 这个账号生成的歌没有需要更新的
+                    return Data(code="200", msg="用户不需要生成音乐", result=None)
+                #没有音乐或者音乐已经到达一定间隔要重新生成时进入
+                sql="""SElECT pressure_value From pressure_data where account= %s  AND record_time = (
+                        SELECT MAX(record_time)
+                        FROM pressure_data
+                        WHERE account = %s
+                        )"""
+                cursor.execute(sql,(account, account))
+                pressure_value=cursor.fetchall()
+                pressure_value=pressure_value[0][0]
+            
                 temperature=get_temperature(pressure_value,cursor)
                 sql="""SElECT prompts From baseline_music_prompts where pressure_level=%s"""
                 params = [pressure_value]
@@ -615,16 +651,76 @@ def get_prompt(account:str,pressure_value:str)->Data:
                 pre_prompt=cursor.fetchall()
                 pre_prompt = " ".join([prompt[0] for prompt in pre_prompt]) if pre_prompt else "" 
                 out_prompts=selected+","+pre_prompt
-
+                #payload={"prompt": out_prompts,"temperature": 0.7}
+                result=generate_music(prompt=out_prompts, temperature=temperature)
+                if "music_url" in result:
+                    music_url=result['music_url']
+                else:
+                   error=result.get('error', '未知错误')
+                   return Data(code="500", msg="音乐生成错误", result=error)
 
                 
+                """
 
-        return Data(code="200", msg="基准数据获取成功", result={"out_prompts": out_prompts, "temperature": temperature})
+                #调用http来拿音乐返回音乐
+                id_response=requests.post("http://8.134.159.247:8000/submit_task", json=result)#要用josn传不然格式不对
+
+                id_json = id_response.json()
+                task_id = id_json.get("task_id")  # 返回数据中有 task_id 字段
+                #调用工作流获取到music_url
+"""
+               
+                if not music_url:
+                    return Data(code="503", msg="音乐文件未生成或未找到", result=None)
+                cursor.execute("SELECT EXISTS(SELECT 1 FROM music_data WHERE account = %s)", (account,))
+                user_music_ex=cursor.fetchone()[0]
+                if  user_music_ex==True:#已经有数据只需要update
+                    sql="""update music_data 
+                    set music_url = %s ,create_time =now(),play = %s 
+                    where  account = %s"""
+                    cursor.execute(sql,(music_url,0,account))
+                else:
+                    sql="""
+                    INSERT INTO music_data  (account, music_url,create_time,
+                    play )
+                    VALUES (%s, %s, now(),  0)"""
+                    cursor.execute(sql,(account,music_url))
+                    #存储音乐
+                connection.commit()
+                return Data(code="200", msg="用户生成音乐成功", result=None)
+
     except pymysql.MySQLError as e:
         return Data(code="500", msg=f"数据库异常: {str(e)}", result=None)
     finally:
         connection.close()
-#存储store_feedback_data
+
+#前端获取音乐
+def get_music(account:str)->Data:
+    connection =get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+             # 检查用户是否存在（这里会抛出UserNotFoundError）
+                cursor.execute("SELECT EXISTS(SELECT 1 FROM music_data WHERE account = %s)", (account,))
+                music_user_ex=cursor.fetchone()[0]
+                if  music_user_ex==False:
+                    return Data(code="404", msg="用户还未生成音乐", result=None)
+                sql="""select music_url from music_data where account =%s and play = 0"""
+                cursor.execute(sql,(account,))
+                result=cursor.fetchone()
+                if not result:
+                    return Data(code="200", msg="用户还未生成音乐", result=None)
+                music_url=result[0]
+                if not music_url:
+                    return Data(code="200", msg="用户未有可播放的音乐", result=None)
+                cursor.execute("update music_data set play = 1  WHERE account = %s and music_url =%s", (account,music_url))
+                connection.commit()
+                return Data(code="200", msg="用户有可播放的音乐", result={"music_url":music_url})
+    except pymysql.Error as e:
+        connection.rollback()
+        raise  # 重新抛出数据库异常
+    finally:
+        connection.close()            
+#存储store_feedback_data 要改
 def store_feedback_data(selectedType:str,feedbackContent:str,contact: str,account: str,images: str=None):
     connection =get_db_connection()
     # 如果 images 参数为空，将其设置为一个空的 JSON 数组
@@ -684,9 +780,64 @@ def get_day_pressure(account:str,date:str)->Data:
         return Data(code="500", msg=f"数据库异常: {str(e)}", result=None)
     finally:
         connection.close()
-    
+#更新用户头像
+def update_avatar(account:str,image_url:str,username:str)->Data:
+    connection =get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # 检查用户是否存在（这里会抛出UserNotFoundError）
+                cursor.execute("SELECT EXISTS(SELECT 1 FROM user WHERE account = %s)", (account,))
+                user_ex=cursor.fetchone()[0]
+                if  user_ex==True:
+                    print("用户存在")
+                    sql="""update user
+                            set avatar_url = %s,
+                            username= COALESCE(%s, username)
+                            where account = %s
+                    """
+                    cursor.execute(sql,(image_url,username,account))           
+                else:
+                    raise UserNotFoundError(account)  
+           
+        connection.commit()
+        return Data(code="200", msg="用户头像更改成功", result=image_url)
+
+    except pymysql.Error as e:
+        connection.rollback()
+        raise  # 重新抛出数据库异常
+    finally:
+        connection.close()
+#获取头像
+def get_avatar(account:str)->Data:
+    connection =get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            # 检查用户是否存在（这里会抛出UserNotFoundError）
+                cursor.execute("SELECT EXISTS(SELECT 1 FROM user WHERE account = %s)", (account,))
+                user_ex=cursor.fetchone()[0]
+                if  user_ex==True:
+                    print("用户存在")
+                    sql="""SELECT avatar_url,username from user 
+                            where account = %s
+                    """
+                    cursor.execute(sql,(account))
+                    result=cursor.fetchone()           
+                else:
+                    raise UserNotFoundError(account)  
+           
+        
+        return Data(code="200", msg="用户头像昵称获取成功", result=result)
+
+    except pymysql.Error as e:
+        connection.rollback()
+        raise  # 重新抛出数据库异常
+    finally:
+        connection.close()
 
 
+#create_music("123") 
+#print("?")
+#update_avatar("123","142536")
 
 #login_with_wechat("12345")
 #add_user("小明","xm123","13800138000","145263")

@@ -1905,3 +1905,318 @@ UnicodeEncodeError: 'gbk' codec can't encode character '\u274c' in position 0: i
 2025-04-20 12:18:57,890 - INFO: 服务启动初始化完成
 2025-04-20 12:18:59,487 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ni77urpk
 2025-04-20 12:18:59,846 - INFO: 服务启动初始化完成
+2025-04-21 21:50:37,964 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_lr3pvzff
+2025-04-21 21:50:39,028 - INFO: 服务启动初始化完成
+2025-04-21 21:50:40,714 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_rk8eeerx
+2025-04-21 21:50:41,733 - INFO: 服务启动初始化完成
+2025-04-21 22:06:55,515 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_rr5nkjfj
+2025-04-21 22:06:56,520 - INFO: 服务启动初始化完成
+2025-04-21 22:16:47,760 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_305hfshh
+2025-04-21 22:16:48,778 - INFO: 服务启动初始化完成
+2025-04-21 22:31:25,197 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_o_dxbpeo
+2025-04-21 22:31:26,127 - INFO: 服务启动初始化完成
+2025-04-21 22:50:27,518 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_k21eqdjh
+2025-04-21 22:50:28,477 - INFO: 服务启动初始化完成
+2025-04-21 22:50:30,103 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_2auuwbwr
+2025-04-21 22:50:31,087 - INFO: 服务启动初始化完成
+2025-04-21 22:52:18,346 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_aq4q5bpu
+2025-04-21 22:52:19,286 - INFO: 服务启动初始化完成
+2025-04-21 22:53:11,887 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_umjw4ae4
+2025-04-21 22:53:12,870 - INFO: 服务启动初始化完成
+2025-04-21 22:55:39,843 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_uq2bnhym
+2025-04-21 22:55:40,833 - INFO: 服务启动初始化完成
+2025-04-21 22:56:10,124 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_uc5sx_ju
+2025-04-21 22:56:11,134 - INFO: 服务启动初始化完成
+2025-04-21 22:57:43,462 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_zpzhymw5
+2025-04-21 22:57:44,459 - INFO: 服务启动初始化完成
+2025-04-21 23:00:14,476 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_k1nozx64
+2025-04-21 23:00:14,876 - INFO: 服务启动初始化完成
+2025-04-21 23:00:39,635 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_gxyssg1w
+2025-04-21 23:00:39,973 - INFO: 服务启动初始化完成
+2025-04-21 23:00:41,818 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_cp5272w1
+2025-04-21 23:00:42,188 - INFO: 服务启动初始化完成
+2025-04-21 23:04:44,407 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_b3kb2gm9
+2025-04-21 23:04:44,793 - INFO: 服务启动初始化完成
+2025-04-21 23:04:46,474 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_vj3vfr_l
+2025-04-21 23:04:46,848 - INFO: 服务启动初始化完成
+2025-04-21 23:10:52,600 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_evhrxsw1
+2025-04-21 23:10:53,595 - INFO: 服务启动初始化完成
+2025-04-21 23:11:22,575 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_vwa9f2ih
+2025-04-21 23:11:23,613 - INFO: 服务启动初始化完成
+2025-04-21 23:13:12,823 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_vgvtx1k0
+2025-04-21 23:13:13,788 - INFO: 服务启动初始化完成
+2025-04-21 23:17:33,995 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_hfuzflta
+2025-04-21 23:17:34,976 - INFO: 服务启动初始化完成
+2025-04-21 23:19:44,538 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_puvripsu
+2025-04-21 23:19:45,550 - INFO: 服务启动初始化完成
+2025-04-21 23:19:48,383 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_v12ru3w1
+2025-04-21 23:19:49,371 - INFO: 服务启动初始化完成
+2025-04-21 23:20:22,796 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_jinpeybl
+2025-04-21 23:20:23,762 - INFO: 服务启动初始化完成
+2025-04-21 23:24:16,672 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_0_82ij0i
+2025-04-21 23:24:17,599 - INFO: 服务启动初始化完成
+2025-04-21 23:26:16,949 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_r0ki5l7o
+2025-04-21 23:26:17,969 - INFO: 服务启动初始化完成
+2025-04-21 23:37:27,998 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_0_4ha8sf
+2025-04-21 23:37:28,978 - INFO: 服务启动初始化完成
+2025-04-21 23:37:30,616 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_nqiujb_u
+2025-04-21 23:37:31,570 - INFO: 服务启动初始化完成
+2025-04-21 23:44:20,857 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_sxun2c03
+2025-04-21 23:44:21,825 - INFO: 服务启动初始化完成
+2025-04-21 23:44:42,857 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_zzxoihdl
+2025-04-21 23:44:43,836 - INFO: 服务启动初始化完成
+2025-04-21 23:46:43,565 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_df8bg35j
+2025-04-21 23:46:44,536 - INFO: 服务启动初始化完成
+2025-04-22 00:08:43,749 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_7hac2_rq
+2025-04-22 00:08:45,594 - INFO: 服务启动初始化完成
+2025-04-22 10:23:31,026 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_2ro4qtfu
+2025-04-22 10:23:32,321 - INFO: 服务启动初始化完成
+2025-04-22 10:23:39,237 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_b77z2vo1
+2025-04-22 10:23:40,282 - INFO: 服务启动初始化完成
+2025-04-22 14:37:39,623 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_qlmbqcln
+2025-04-22 14:37:40,219 - INFO: 服务启动初始化完成
+2025-04-22 14:37:43,560 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_r9j_62ue
+2025-04-22 14:37:44,174 - INFO: 服务启动初始化完成
+2025-04-22 14:40:03,914 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_uu6rc160
+2025-04-22 14:40:04,645 - INFO: 服务启动初始化完成
+2025-04-22 14:56:30,155 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_o8ktkp8u
+2025-04-22 14:56:31,992 - INFO: 服务启动初始化完成
+2025-04-22 14:56:36,817 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_6zv8qjr7
+2025-04-22 14:56:38,571 - INFO: 服务启动初始化完成
+2025-04-22 14:56:51,254 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_k_j3o6gc
+2025-04-22 14:56:52,644 - INFO: 服务启动初始化完成
+2025-04-22 14:57:05,979 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_1j4y1yyf
+2025-04-22 14:57:08,106 - INFO: 服务启动初始化完成
+2025-04-22 14:57:11,719 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_pblkx6ag
+2025-04-22 14:57:13,473 - INFO: 服务启动初始化完成
+2025-04-22 15:02:20,651 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_srj0fq4b
+2025-04-22 15:02:22,386 - INFO: 服务启动初始化完成
+2025-04-22 15:03:47,660 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music__bmy0vlg
+2025-04-22 15:03:49,436 - INFO: 服务启动初始化完成
+2025-04-22 15:04:00,124 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_v8b9wm8m
+2025-04-22 15:04:01,969 - INFO: 服务启动初始化完成
+2025-04-22 15:04:05,567 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_739qoa9x
+2025-04-22 15:04:07,767 - INFO: 服务启动初始化完成
+2025-04-22 16:49:14,282 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_4gbxz80b
+2025-04-22 16:49:14,678 - INFO: 服务启动初始化完成
+2025-04-22 16:49:21,231 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_x7vskeaa
+2025-04-22 16:49:21,569 - INFO: 服务启动初始化完成
+2025-04-22 16:51:42,500 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_hl6ksbvi
+2025-04-22 16:51:42,839 - INFO: 服务启动初始化完成
+2025-04-22 16:57:43,016 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_i1o6q8uy
+2025-04-22 16:57:43,384 - INFO: 服务启动初始化完成
+2025-04-22 16:57:50,013 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_jmcy2xd5
+2025-04-22 16:57:50,362 - INFO: 服务启动初始化完成
+2025-04-22 17:03:19,698 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_rbr9tf8q
+2025-04-22 17:03:20,674 - INFO: 服务启动初始化完成
+2025-04-22 20:03:11,520 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_lbvkrfoe
+2025-04-22 20:03:12,438 - INFO: 服务启动初始化完成
+2025-04-22 20:03:18,965 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_7e8l_ga4
+2025-04-22 20:03:19,912 - INFO: 服务启动初始化完成
+2025-04-22 20:37:11,476 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_xn44sm2h
+2025-04-22 20:37:12,414 - INFO: 服务启动初始化完成
+2025-04-22 20:37:18,892 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ljj7qbvu
+2025-04-22 20:37:19,795 - INFO: 服务启动初始化完成
+2025-04-22 20:39:58,887 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ja2wn_uf
+2025-04-22 20:39:59,938 - INFO: 服务启动初始化完成
+2025-04-22 20:40:06,417 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_0a3ycbzt
+2025-04-22 20:40:07,424 - INFO: 服务启动初始化完成
+2025-04-22 20:41:22,383 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_rx71w5z_
+2025-04-22 20:41:23,323 - INFO: 服务启动初始化完成
+2025-04-22 20:41:52,593 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_67fy4z7a
+2025-04-22 20:41:53,604 - INFO: 服务启动初始化完成
+2025-04-22 20:45:19,523 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_09p096n4
+2025-04-22 20:45:20,505 - INFO: 服务启动初始化完成
+2025-04-22 20:45:27,096 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_bnqfzvdv
+2025-04-22 20:45:28,051 - INFO: 服务启动初始化完成
+2025-04-22 20:47:27,453 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_hbdzi6u2
+2025-04-22 20:47:28,415 - INFO: 服务启动初始化完成
+2025-04-22 20:47:48,475 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_9d0o1tih
+2025-04-22 20:47:49,466 - INFO: 服务启动初始化完成
+2025-04-22 20:47:59,344 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_2k1gj25k
+2025-04-22 20:48:00,273 - INFO: 服务启动初始化完成
+2025-04-22 20:49:05,926 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_kcpkts74
+2025-04-22 20:49:06,894 - INFO: 服务启动初始化完成
+2025-04-22 21:05:05,081 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_g4pjc_4q
+2025-04-22 21:05:06,082 - INFO: 服务启动初始化完成
+2025-04-22 21:05:12,647 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_4x0xq1ji
+2025-04-22 21:05:13,592 - INFO: 服务启动初始化完成
+2025-04-22 21:05:34,811 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_5ooes7au
+2025-04-22 21:05:35,774 - INFO: 服务启动初始化完成
+2025-04-22 21:06:24,367 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ouocip2f
+2025-04-22 21:06:25,364 - INFO: 服务启动初始化完成
+2025-04-23 14:57:46,647 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_trtjycjw
+2025-04-23 14:57:49,373 - INFO: 服务启动初始化完成
+2025-04-23 14:57:57,631 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_5wom39zc
+2025-04-23 14:57:59,499 - INFO: 服务启动初始化完成
+2025-04-23 15:41:59,705 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_rsgg826v
+2025-04-23 15:42:01,600 - INFO: 服务启动初始化完成
+2025-04-23 16:06:20,098 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ch0pvi8a
+2025-04-23 16:06:21,294 - INFO: 服务启动初始化完成
+2025-04-23 16:06:29,309 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music__aono34u
+2025-04-23 16:06:30,316 - INFO: 服务启动初始化完成
+2025-04-23 16:10:26,415 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_zrybrdam
+2025-04-23 16:10:27,491 - INFO: 服务启动初始化完成
+2025-04-23 16:11:22,158 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_sibgtpy3
+2025-04-23 16:11:23,166 - INFO: 服务启动初始化完成
+2025-04-23 16:13:12,641 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_unz3x7ba
+2025-04-23 16:13:13,630 - INFO: 服务启动初始化完成
+2025-04-23 16:23:37,907 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_e_9oidye
+2025-04-23 16:23:38,904 - INFO: 服务启动初始化完成
+2025-04-23 16:23:45,472 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ryq0w6uh
+2025-04-23 16:23:46,413 - INFO: 服务启动初始化完成
+2025-04-23 16:24:51,224 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_qzjhm0oc
+2025-04-23 16:24:52,206 - INFO: 服务启动初始化完成
+2025-04-23 16:32:42,049 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_wvagfx6e
+2025-04-23 16:32:43,033 - INFO: 服务启动初始化完成
+2025-04-23 16:33:08,067 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_bl53m3hp
+2025-04-23 16:33:09,036 - INFO: 服务启动初始化完成
+2025-04-23 17:02:10,972 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_yxfbjupt
+2025-04-23 17:02:11,339 - INFO: 服务启动初始化完成
+2025-04-23 17:02:18,158 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_km7e9wet
+2025-04-23 17:02:18,492 - INFO: 服务启动初始化完成
+2025-04-23 17:02:40,835 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_s4972p4e
+2025-04-23 17:02:41,179 - INFO: 服务启动初始化完成
+2025-04-23 17:04:47,754 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_th3his_z
+2025-04-23 17:04:48,095 - INFO: 服务启动初始化完成
+2025-04-23 17:04:55,004 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_xg0h1a49
+2025-04-23 17:04:55,351 - INFO: 服务启动初始化完成
+2025-04-23 17:05:21,836 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_cvnauuc5
+2025-04-23 17:05:22,174 - INFO: 服务启动初始化完成
+2025-04-23 17:09:27,608 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_6vdd8hdc
+2025-04-23 17:09:27,953 - INFO: 服务启动初始化完成
+2025-04-23 17:09:45,316 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ppuhxiik
+2025-04-23 17:09:45,672 - INFO: 服务启动初始化完成
+2025-04-23 17:10:54,770 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_7547t3y8
+2025-04-23 17:10:55,118 - INFO: 服务启动初始化完成
+2025-04-23 17:11:06,293 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_0mj720rc
+2025-04-23 17:11:06,642 - INFO: 服务启动初始化完成
+2025-04-23 17:11:19,952 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_84g5yknf
+2025-04-23 17:11:20,295 - INFO: 服务启动初始化完成
+2025-04-23 17:11:27,195 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_326m3cu3
+2025-04-23 17:11:27,547 - INFO: 服务启动初始化完成
+2025-04-23 17:17:19,166 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_qou5n2k3
+2025-04-23 17:17:20,170 - INFO: 服务启动初始化完成
+2025-04-23 17:32:59,193 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_7n_mfnsi
+2025-04-23 17:33:00,161 - INFO: 服务启动初始化完成
+2025-04-23 17:33:07,018 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_27bn32ni
+2025-04-23 17:33:07,969 - INFO: 服务启动初始化完成
+2025-04-23 22:10:14,136 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_edtquvad
+2025-04-23 22:10:14,657 - INFO: 服务启动初始化完成
+2025-04-23 22:10:21,337 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_136l7_i8
+2025-04-23 22:10:21,691 - INFO: 服务启动初始化完成
+2025-04-23 22:12:41,584 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_8r5nr8rv
+2025-04-23 22:12:41,930 - INFO: 服务启动初始化完成
+2025-04-24 10:09:11,961 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_j3348n7g
+2025-04-24 10:09:12,326 - INFO: 服务启动初始化完成
+2025-04-24 10:09:19,074 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_iueonxqq
+2025-04-24 10:09:19,399 - INFO: 服务启动初始化完成
+2025-04-24 10:41:00,302 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_p3rfti6v
+2025-04-24 10:41:00,665 - INFO: 服务启动初始化完成
+2025-04-24 10:46:33,133 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_0dyi5o5b
+2025-04-24 10:46:33,478 - INFO: 服务启动初始化完成
+2025-04-24 10:52:04,884 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_x4jumlr7
+2025-04-24 10:52:05,237 - INFO: 服务启动初始化完成
+2025-04-24 10:52:08,346 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_0745reva
+2025-04-24 10:52:08,765 - INFO: 服务启动初始化完成
+2025-04-24 10:52:38,239 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_bt87auph
+2025-04-24 10:52:38,617 - INFO: 服务启动初始化完成
+2025-04-24 10:53:27,302 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_3brqubmq
+2025-04-24 10:53:27,649 - INFO: 服务启动初始化完成
+2025-04-24 10:53:42,844 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_pizfemeq
+2025-04-24 10:53:43,183 - INFO: 服务启动初始化完成
+2025-04-24 10:54:16,732 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_b4yo1rer
+2025-04-24 10:54:17,084 - INFO: 服务启动初始化完成
+2025-04-24 10:54:47,596 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_vlgd8tv6
+2025-04-24 10:54:47,962 - INFO: 服务启动初始化完成
+2025-04-24 16:43:51,808 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_sxjro476
+2025-04-24 16:43:52,878 - INFO: 服务启动初始化完成
+2025-04-24 16:43:59,723 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_6qtc6y5d
+2025-04-24 16:44:00,697 - INFO: 服务启动初始化完成
+2025-04-24 17:48:02,700 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_76x4rxqd
+2025-04-24 17:48:03,080 - INFO: 服务启动初始化完成
+2025-04-24 17:48:33,264 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_4k5nk2q1
+2025-04-24 17:48:33,610 - INFO: 服务启动初始化完成
+2025-04-24 17:48:40,450 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_j0bhz4pn
+2025-04-24 17:48:40,807 - INFO: 服务启动初始化完成
+2025-04-24 17:50:01,083 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_s66fngi0
+2025-04-24 17:50:01,444 - INFO: 服务启动初始化完成
+2025-04-24 17:52:39,807 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_w8nv8yko
+2025-04-24 17:52:40,156 - INFO: 服务启动初始化完成
+2025-04-24 17:52:44,252 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_9cq87yjo
+2025-04-24 17:52:44,605 - INFO: 服务启动初始化完成
+2025-04-24 17:52:51,597 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_mvr5jq4s
+2025-04-24 17:52:51,955 - INFO: 服务启动初始化完成
+2025-04-24 17:54:59,768 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_0hao5ksz
+2025-04-24 17:55:00,115 - INFO: 服务启动初始化完成
+2025-04-24 17:55:07,197 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_qo2vxchs
+2025-04-24 17:55:07,530 - INFO: 服务启动初始化完成
+2025-04-24 17:55:14,317 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_6c5lbvcb
+2025-04-24 17:55:14,664 - INFO: 服务启动初始化完成
+2025-04-24 17:57:50,964 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_il3v7esh
+2025-04-24 17:57:51,315 - INFO: 服务启动初始化完成
+2025-04-24 17:57:56,510 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_xsu9bkqd
+2025-04-24 17:57:59,678 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_8lzogd1n
+2025-04-24 17:58:00,069 - INFO: 服务启动初始化完成
+2025-04-24 17:58:06,814 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_jd5bome6
+2025-04-24 17:58:07,150 - INFO: 服务启动初始化完成
+2025-04-24 18:03:26,540 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_xxa2gk3x
+2025-04-24 18:03:27,487 - INFO: 服务启动初始化完成
+2025-04-24 18:07:11,045 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_ah9cax6h
+2025-04-24 18:07:12,013 - INFO: 服务启动初始化完成
+2025-04-24 18:07:18,800 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_sq1czqls
+2025-04-24 18:07:19,709 - INFO: 服务启动初始化完成
+2025-04-24 18:10:29,287 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_rxzqi60y
+2025-04-24 18:10:31,934 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_k6vlv189
+2025-04-24 18:10:32,939 - INFO: 服务启动初始化完成
+2025-04-24 18:10:39,716 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_c6c2hjpt
+2025-04-24 18:10:40,060 - INFO: 服务启动初始化完成
+2025-04-24 18:14:56,750 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_l574qq5i
+2025-04-24 18:14:57,827 - INFO: 服务启动初始化完成
+2025-04-24 18:17:47,212 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_yd1hxfk3
+2025-04-24 18:17:48,193 - INFO: 服务启动初始化完成
+2025-04-24 18:17:58,389 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_9bbslddn
+2025-04-24 18:17:59,340 - INFO: 服务启动初始化完成
+2025-04-24 18:18:17,838 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_m522peua
+2025-04-24 18:18:18,234 - INFO: 服务启动初始化完成
+2025-04-24 18:23:33,581 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_32s25nnz
+2025-04-24 18:23:34,711 - INFO: 服务启动初始化完成
+2025-04-24 18:23:39,499 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_n5qvtioy
+2025-04-24 18:23:39,859 - INFO: 服务启动初始化完成
+2025-04-24 18:23:46,744 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_5mrzmqwh
+2025-04-24 18:23:47,101 - INFO: 服务启动初始化完成
+2025-04-24 18:30:50,978 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_58poguub
+2025-04-24 18:30:51,962 - INFO: 服务启动初始化完成
+2025-04-24 18:31:20,471 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_6p852js1
+2025-04-24 18:31:31,502 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_l5c09skj
+2025-04-24 18:31:31,868 - INFO: 服务启动初始化完成
+2025-04-24 18:31:38,614 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_l6zjuu89
+2025-04-24 18:31:38,963 - INFO: 服务启动初始化完成
+2025-04-24 18:52:21,642 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_djtsb562
+2025-04-24 18:52:22,385 - INFO: 服务启动初始化完成
+2025-04-24 18:52:30,282 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_pdnvjafz
+2025-04-24 18:52:30,846 - INFO: 服务启动初始化完成
+2025-04-24 18:58:48,097 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_f07nx2wu
+2025-04-24 18:58:48,762 - INFO: 服务启动初始化完成
+2025-04-24 18:58:57,520 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_3s3pr4dl
+2025-04-24 18:58:58,237 - INFO: 服务启动初始化完成
+2025-04-24 19:03:48,898 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music__tqmm5vl
+2025-04-24 19:03:50,510 - INFO: 服务启动初始化完成
+2025-04-24 19:03:59,499 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_9a5r936u
+2025-04-24 19:04:00,162 - INFO: 服务启动初始化完成
+2025-04-24 19:05:44,638 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_utg03lwp
+2025-04-24 19:05:45,201 - INFO: 服务启动初始化完成
+2025-04-24 19:23:08,064 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_w3qh943p
+2025-04-24 19:23:09,755 - INFO: 服务启动初始化完成
+2025-04-24 19:23:30,890 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_6un5bj96
+2025-04-24 19:23:32,774 - INFO: 服务启动初始化完成
+2025-04-24 21:22:23,504 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music__e3m_qol
+2025-04-24 21:22:23,906 - INFO: 服务启动初始化完成
+2025-04-24 21:22:30,865 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_qme07coi
+2025-04-24 21:22:31,197 - INFO: 服务启动初始化完成
+2025-04-24 21:41:17,641 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_rggdl089
+2025-04-24 21:41:18,006 - INFO: 服务启动初始化完成
+2025-04-24 21:41:22,842 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_75jut_0f
+2025-04-24 21:41:23,176 - INFO: 服务启动初始化完成
+2025-04-24 21:41:30,004 - INFO: 临时目录创建于: C:\Users\C\AppData\Local\Temp\music_u9ct6gjv
+2025-04-24 21:41:30,329 - INFO: 服务启动初始化完成
