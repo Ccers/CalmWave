@@ -27,7 +27,7 @@ import json
 import re#智能体调用
 import uuid
 import load
-#http://172.29.235.189:5000/apidocs/  接口查看文档 服务器ip113.45.206.40
+#http://172.29.235.236:5000/apidocs/  接口查看文档 服务器ip113.45.206.40
 # ====================
 # 应用初始化配置
 # ====================
@@ -1340,7 +1340,13 @@ responses:
         return jsonify(result.__dict__), status_code
   except Exception as e:
        return jsonify(Data(code="500", msg=f"服务异常: {str(e)}").__dict__), 500
+import unicodedata
 
+# 可选：对每个字段做基本清洗，防止非法字符导致 jsonify 异常
+def clean_text(text):
+    text = ''.join(ch for ch in text if unicodedata.category(ch)[0] != 'C')  # 清除控制字符
+    text = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', text)  # 清除不可见字符
+    return text.strip()
 
 def extract_json_from_nested_content(content):
     try:
@@ -1490,6 +1496,13 @@ responses:
         data = request.get_json()
         user_question = data.get("question", "")
         account = data.get("account", "default")  # 默认用户
+        """
+        like="类型：流行 心情：放松 节奏：中等 additional_requirements：无"
+        result={
+          "answer": f"猜你喜欢：{like}"
+        }
+        return jsonify(Data(code="200", msg="AI分析成功", result=result).__dict__)
+        """
         
         if not user_question:
             return jsonify(Data(code="400", msg="问题不能为空").__dict__), 200
@@ -1515,17 +1528,19 @@ responses:
 
         parsed_json = None
         for message in prompts_response:
-            content = message.get("content", "")
+            content = clean_text(message.get("content", ""))
+            #content = message.get("content", "")
             if content:
                 parsed_json = extract_json_from_nested_content(content)
                 if parsed_json:
                     break
 
-        #print("[DEBUG] parsed_json 最终结果:")
-        #print(parsed_json)
+        print("[DEBUG] parsed_json 最终结果:")
+        print(parsed_json)
 
         if parsed_json is None:
-            return jsonify({"code": "500", "msg": "未能解析有效的推荐数据"}), 200
+            return jsonify(Data(code="500", msg="未能解析有效的推荐数据").__dict__), 200
+        
 
         # 提取数据（提供默认值）
         genre = parsed_json.get('genre', '')
@@ -1534,7 +1549,7 @@ responses:
         additional_requirements = parsed_json.get('additional_requirements', '')
 
 
-        like = f"{genre} {mood} {tempo} {additional_requirements}".strip()
+        like = f"猜你喜欢：{' '.join(filter(None, [genre, mood, tempo, additional_requirements]))}"
         """
         if like is None:
             print("[DEBUG] parsed_json 最终结果:")
@@ -1545,15 +1560,17 @@ responses:
         prompts_result = database.store_personal_prompts(account, genre, mood, tempo, additional_requirements)
 
         result = {
-            "answer": f"猜你喜欢：{like}"
+            "answer": like
             
         }
+        print ("like:"+like)
 
-        return jsonify(Data(code="200", msg="AI分析成功", result=result).__dict__)
+        return jsonify(Data(code="200", msg="AI分析成功", result=result).to_dict()),200
 
     except Exception as e:
-        print(f"[ERROR] 服务异常: {str(e)}")
-        return jsonify(Data(code="500", msg=f"服务异常: {str(e)}", result=None).__dict__), 500
+      print(f"[ERROR] 服务异常: {str(e)}")
+      return jsonify(Data(code="500", msg=f"服务异常: {str(e)}", result=None).to_dict()), 500
+
 #获取用户的个性化prompts
 @app.route('/presonal_prompts/get', methods=['GET'])   
 def get_presonal_prompts():
